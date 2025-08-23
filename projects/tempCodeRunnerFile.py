@@ -1,1 +1,0 @@
-user_info.append(info_dict)
