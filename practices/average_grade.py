@@ -1,13 +1,17 @@
 # CB 1st Average Grade
-first_period = float(input(f"What is your grade in first period?"))
-second_period = float(input(f"What is your grade in second period?"))
-third_period = float(input(f"What is your grade in third period?"))
-fourth_period = float(input(f"What is your grade in fourth period?"))
-fifth_period = float(input(f"What is your grade in fifth period?"))
-sixth_period = float(input(f"What is your grade in sixth period?"))
-seventh_period = float(input(f"What is your grade in seventh period?"))
+classes_total = input("How many classes are you taking? \n")
+num_total = int(classes_total)
+grades = []
+global period
+period = 0
 
-average_grade = (first_period + second_period + third_period + fourth_period + fifth_period + sixth_period + seventh_period)/7
-average_grade = round(average_grade, 2)
+for i in range(num_total):
+    period += 1
+    grade = input("What is your grade in period " + str(period) + "? Don't put a percent sign in your answer. \n")
+    float_grade = float(grade)
+    grades.append(float_grade)
 
-print(f"Your average grade between all your classes is {str(average_grade)}%.")
+average_grade = (sum(grades))/num_total
+rounded_average = round(average_grade, 2)
+print(f"Your average grade is {str(rounded_average)}")
+
