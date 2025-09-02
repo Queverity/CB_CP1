@@ -5,7 +5,7 @@ returning = ["Darius","Cecily","Nick","Matthew","Parker"]
 admin = ["Pryor","Ms. LaRose"]
 
 # I didn't use a .capitlize() function here because it messes with the name Ms. LaRose.
-name = input("What is your name: ")
+name = input("What is your name:\n")
 
 
 # These if-then statements will capitlize the name unless it is Ms. LaRose, as that name is case sensitive.
