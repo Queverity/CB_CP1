@@ -6,13 +6,13 @@ adjective_one = input("Enter an adjective: \n")
 
 animal = input("Enter an animal: \n")
 
-animal_name = input("Enter an animal name: \n").capitalize
+animal_name = input("Enter an animal name: \n").capitalize()
 
 item = input("Enter an item: \n")
 
 place = input("Enter a place: \n")
 
-human_name = input("Enter a human name: \n").capitalize
+human_name = input("Enter a human name: \n").capitalize()
 
 adjective_two = input("Enter another adjective: \n")
 
