@@ -21,7 +21,7 @@ while True:
 while True:
     gpa = input("What is your non-weighted GPA?").strip()
     float_gpa = float(gpa)
-    if float_gpa < 0:
+    if float_gpa < 0 or float_gpa > 4:
         print("Invalid GPA")
         continue
     elif float_gpa <= 4:
