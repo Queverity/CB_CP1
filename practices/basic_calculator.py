@@ -4,7 +4,6 @@ global validating_two
 validating = True
 validating_two = True
 global operations
-operations = ["Addition","Subtraction","Multiplacation","Division","Floor Division","Modulo","Exponent"]
 
 while True:
 
@@ -42,44 +41,39 @@ while True:
    
     while True:
         equation = input("What math operation do you want to perform? Enter as follows: Addition, Subtraction, Multiplacation, Division, Floor Division, Modulo, Exponent").strip().title()
-        match operations:
+        match equation:
             case "Addition":
                 num_addition = round(digit_one + digit_two, 2)
-                print(f"{str(digit_one)} + {str(digit_one)} = {str(num_addition):.2f}")
+                print(f"{str(digit_one)} + {str(digit_two)} = {num_addition:.2f}")
                 break
             case "Subtraction":
                  num_subtraction = round(digit_one - digit_two, 2)
-                 print(f"{str(digit_one)} - {str(digit_one)} = {str(num_subtraction):.2f}")
+                 print(f"{str(digit_one)} - {str(digit_two)} = {num_subtraction:.2f}")
                  break
             case "Multiplacation":
                     num_multiplacation = round(digit_one * digit_two, 2)
-                    print(f"{str(digit_one)} x {str(digit_one)} = {str(num_multiplacation):.2f}")
+                    print(f"{str(digit_one)} x {str(digit_two)} = {num_multiplacation:.2f}")
                     break
             case "Division":
                     num_division = round(digit_one / digit_two, 2)
-                    print(f"{str(digit_one)} / {str(digit_one)} = {str(num_division):.2f}")
+                    print(f"{str(digit_one)} / {str(digit_two)} = {num_division:.2f}")
                     break
             case "Floor Division":
                   num_floor = round(digit_one // digit_two, 2)
-                  print(f"{str(digit_one)} // {str(digit_one)} = {str(num_floor):.2f}")
+                  print(f"{str(digit_one)} // {str(digit_two)} = {num_floor:.2f}")
                   break
             case "Modulo":
                   num_modulo = round(digit_one % digit_two, 2)
-                  print(f"{str(digit_one)} % {str(digit_one)} = {str(num_modulo):.2f}")
+                  print(f"{str(digit_one)} % {str(digit_two)} = {num_modulo:.2f}")
                   break
             case "Exponent":
                   num_exponent = round(digit_one ** digit_two, 2)
-                  print(f"{str(digit_one)} ^ {str(digit_one)} = {str(num_exponent):.2f}")
+                  print(f"{str(digit_one)} ^ {str(digit_two)} = {num_exponent:.2f}")
                   break
             case _:
                   print("Invalid answer")
                   continue
              
-    loop = input("Would you like to continue? Yes/No").strip().capitalize()
-    if loop == "Yes":
-         continue
-    else:
-         print("goodbye!")
-         break
-    
-
+   
+    print("goodbye!")
+    break
