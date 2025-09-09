@@ -73,7 +73,6 @@ while True:
             case _:
                   print("Invalid answer")
                   continue
-             
-   
+                
     print("goodbye!")
     break
