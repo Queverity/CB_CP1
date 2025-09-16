@@ -1,3 +1,1 @@
-print("Test")
-
-print("Another test")
+print(0.1 + 0.2)
