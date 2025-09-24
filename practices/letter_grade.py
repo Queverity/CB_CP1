@@ -7,6 +7,7 @@ classes = []
 num_grades = []
 gp_list = []
 letter_grades = []
+index_count = 0
 
 def percent_translation(grade,class_name):
     if grade >= 94 and grade <= 100:
@@ -82,12 +83,12 @@ while True:
         if percent_translation == False:
             continue
         else:
-            for i in classes:
+            while True:
                 grades_total = sum(num_grades)
                 gp_total = sum(gp_list)
                 average_grade = grades_total/len(num_grades)
                 gpa = gp_total/len(gp_list)
-                print(f"{i}")
+                print(f"Letter grade for {classes[index_count]}: {num_grades[index_count]}\n Grade Point Score for {classes[index_count]}: {gp_list[index_count]} ")
                 print(f"Average grade: {average_grade}\n GPA: {gpa}")
             repeat = input("Do you want to input another grade? Yes/No").strip().capitalize()
             if repeat == "Yes":
