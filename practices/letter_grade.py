@@ -7,7 +7,7 @@ classes = []
 num_grades = []
 gp_list = []
 letter_grades = []
-index_count = 0
+index_count = -1
 
 def percent_translation(grade,class_name):
     if grade >= 94 and grade <= 100:
@@ -77,7 +77,15 @@ while True:
         continue
     else:
         classes.append(class_name)
-        grade = float(input(f"What grade do you have in {class_name}? Do not include the percent sign."))
+        index_count += 1
+        while True:
+            grade = input(f"What grade do you have in {class_name}? Do not include the percent sign.").strip()
+            if grade.isalpha() or float(grade) > 100 or float(grade) < 0:
+                print("invalid answer")
+                continue
+            else:
+                grade = float(grade)
+                break
         num_grades.append(grade)
         percent_translation(grade,class_name)
         if percent_translation == False:
@@ -87,9 +95,11 @@ while True:
                 grades_total = sum(num_grades)
                 gp_total = sum(gp_list)
                 average_grade = grades_total/len(num_grades)
+                rounded_average = round(average_grade,2)
                 gpa = gp_total/len(gp_list)
-                print(f"Letter grade for {classes[index_count]}: {num_grades[index_count]}\n Grade Point Score for {classes[index_count]}: {gp_list[index_count]} ")
-                print(f"Average grade: {average_grade}\n GPA: {gpa}")
+                print(f"Letter grade for {class_name}: {letter_grades[index_count]}\n Grade Point Score for {classes[index_count]}: {gp_list[index_count]} ")
+                print(f"Average grade: {rounded_average}\n GPA: {gpa}")
+                break
             repeat = input("Do you want to input another grade? Yes/No").strip().capitalize()
             if repeat == "Yes":
                 continue
