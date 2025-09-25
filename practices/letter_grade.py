@@ -62,7 +62,7 @@ def percent_translation(grade,class_name):
         return True
     elif grade < 60:
         print(f"You have an F in {class_name}. That is equal to a 0.0 on the regular GPA scale.")
-        letter_grades.append("A")
+        letter_grades.append("F")
         gp_list.append(0)
         return True
     else:
@@ -80,7 +80,7 @@ while True:
         index_count += 1
         while True:
             grade = input(f"What grade do you have in {class_name}? Do not include the percent sign.").strip()
-            if grade.isalpha() or float(grade) > 100 or float(grade) < 0:
+            if grade.isalpha() or "%" in grade or float(grade) > 100 or float(grade) < 0:
                 print("invalid answer")
                 continue
             else:
