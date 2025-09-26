@@ -16,10 +16,14 @@ def start_game():
         if guess == number_to_guess:
             print("Congratulations! You've guessed the number!")
             game_over = True
+        # The program was not incrementing attempts each time the user guessed incorrectly, making it so the user had an effectively infinite number of attempts. This is a logic error.
         elif guess > number_to_guess:
             print("Too high! Try again.")
+            attempts += 1
+        # The program was not incrementing attempts each time the user guessed incorrectly, making it so the user had an effectively infinite number of attempts. This is a logic error.
         elif guess < number_to_guess:
             print("Too low! Try again.")  
-        continue
+            attempts += 1
+        # There was a continue statement here serving no purpose. I removed it. This was a logic error.
     print("Game Over. Thanks for playing!")
 start_game()
