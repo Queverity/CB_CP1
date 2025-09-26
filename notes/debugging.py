@@ -18,3 +18,10 @@ print(numone + numtwo)
 # Rubber duck debugging: talking through a problem to someone else allows you to find issues easier
 
 # Runtime Error - happen when your code is running
+import random
+
+# while True:
+  #  denominator = random.randint(0,5)
+   # if denominator == 0:
+    # print(10/denominator)
+    # this is bad, don't divide by zero. It won't always break, which is why it is a runtime error.
