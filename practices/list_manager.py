@@ -1,45 +1,81 @@
 # CB 1st Shopping List Manager
-
 groceries = []
 
+print("Shopping List")
 while True:
-   action = input("Would you like to add an item, remove an item, mark an item as complete, or print out your list? Add/Remove/Print/Mark/Exit").strip().capitalize()
+   print("Chose one of the following options (type in as follows, no numbers)")
+   action = input("1. Add\n2. Remove\n3. Mark\n4. Print\n5. Clear\n6. Exit\n").strip().capitalize()
+   
    if action == "Add":
-      new_item = input("What do you want to add to your list?").strip().capitalize()
-      if new_item in groceries:
-         print("Item is already on shopping list.")
+      item = input("What do you want to add to your list?").strip().capitalize()
+      if item in groceries:
+         print(f"{item} is already on shopping list.")
          continue
       else:
-        groceries.append(new_item)
-        print("Item added")
+        groceries.append(item)
+        print(f"{item} added")
+        
    elif action == "Remove":
+        if groceries == []:
+           print("List is empty.")
+           continue
+        print("Current list:")
         for x in groceries:
            print(x)
-        delete_item = input("What do you want to remove from your list?").strip().capitalize()
-        if delete_item not in groceries:
-            print("Item is not on shopping list.")
+        item = input("What do you want to remove from your list?").strip().capitalize()
+        if item not in groceries:
+            print(f"{item} is not on shopping list.")
             continue
         else:
-            groceries.append(new_item)
-            print("Item removed")
+            groceries.remove(item)
+            print(f"{item} removed")
+
    elif action == "Mark":
-      for x in groceries:
-         print(x)
-      mark_item = input("What item do you want to mark as complete?")
-      if mark_item not in groceries:
-         print("Item is not on shopping list.")
+      if groceries == []:
+         print("List is empty.")
          continue
       else:
-         groceries[mark_item] = mark_item + " \u2713"
-         print("Item marked")
+         print("Current list:")
+         for x in groceries:
+            print(x)
+         item = input("What item do you want to mark as complete?").strip().capitalize()
+         if item  not in groceries:
+            print(f"{item} is not on shopping list.")
+            continue
+         else:
+            item_index = groceries.index(item)
+            groceries[item_index] = item + " \u2713"
+            print(f"{item} marked")
+
    elif action == "Print":
-      for x in groceries:
-         print(x)
-   else:
+      if groceries == []:
+         print("List is empty.")
+         continue
+      else:
+         print("Current list:")
+         for x in groceries:
+            print(x)
+   
+   elif action == "Clear":
+      if groceries == []:
+         print("List is already empty.")
+      else:
+         confirm = input("Confirm? If confirmed, the list will be emptied. Y/N").strip().capitalize()
+         if confirm == "N":
+            print("Task canceled, list has not been cleared.")
+            continue
+         elif confirm == "Y":
+            groceries = []
+            print("List cleared.")
+         else:
+            print("Invalid answer, list not cleared")
+            continue
+
+   elif action == "Exit":
       print("Goodbye!")
       break
+
+   else:
+      print("Invalid answer")
+      continue
         
-
-    
-
-    
