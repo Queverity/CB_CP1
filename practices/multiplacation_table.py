@@ -1,26 +1,6 @@
 # CB 1st Multiplacation Table
 
-row1 = ""
-row2 = ""
-row3 = ""
-row4 = ""
-row5 = ""
-row6 = ""
-row7 = ""
-row8 = ""
-row9 = ""
-row10 = ""
-row11 = ""
-row12 = ""
-
-column = 1
-row = 1
-
-for i in range(1,13):
-    product = str(column * row)
-    match column:
-        case 1:
-            row1 + (product + " ")
-            row += 1
-
-print(row1 + row2 + row3 + row4 + row5 + row6 + row7 + row8 + row9 + row10 + row11 + row12)
+for x in [1,2,3,4,5,6,7,8,9,10,11,12]:
+    for y in [1,2,3,4,5,6,7,8,9,10,11,12]:
+        print(x*y, end = " ")
+    print()
