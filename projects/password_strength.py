@@ -14,6 +14,8 @@ lower_check = False
 digit_check = False
 special_check = False
 
+# This list is used when checking if there is a special character in the password provided by the user.d
+
 special_characters = ["`","~","!","@","#","$","%","^","&","*","_","-","=","+","|","/",":",";","'",'"',",",".","<",">","?","[","]","{","}","(",")"," "]
 
 # This while loop used various string methods along with for loops to check if certain types of characters are in the password.
@@ -24,7 +26,7 @@ special_characters = ["`","~","!","@","#","$","%","^","&","*","_","-","=","+","|
 print("Password strength checker")
 
 while True:
-    user_password = input("Enter password: ")
+    user_password = input("Enter password: ").strip()
     if len(user_password) >= 8:
         password_score += 1
         length_check = True
