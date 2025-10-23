@@ -6,20 +6,20 @@ def translator(mode,text,key):
         if char.isalpha():
             if mode == "Decode":
                 shifted_letter = (ord(char) - key)
-                if char.isupper() and shifted_letter < 90:
-                    shifted_letter -= 26
-                elif char.islower() and shifted_letter < 122:
-                    shifted_letter -= 26
+                if char.isupper() and shifted_letter < 65:
+                    shifted_letter += 25
+                elif char.islower() and shifted_letter < 97:
+                    shifted_letter += 25
                 else:
                     pass
                 shifted_letter = chr(shifted_letter)
                 result += shifted_letter
             elif mode == "Encode":
                 shifted_letter = (ord(char) + key)
-                if char.isupper() and shifted_letter > 65:
-                    shifted_letter += 26
-                elif char.islower() and shifted_letter > 97:
-                    shifted_letter += 26
+                if char.isupper() and shifted_letter > 90:
+                    shifted_letter -= 25
+                elif char.islower() and shifted_letter > 122:
+                    shifted_letter -= 25
                 shifted_letter = chr(shifted_letter)
                 result += shifted_letter
         else:

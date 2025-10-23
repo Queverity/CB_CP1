@@ -1,1 +1,5 @@
 print(ord("Z"))
+print(chr(90))
+print(ord("S"))
+print(chr(86))
+print(chr(65))
