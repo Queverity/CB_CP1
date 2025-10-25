@@ -68,7 +68,7 @@ def monster_attack(player_class,monster_type):
     print("Rolling 1D20...")
     time.sleep(1)
     attack_roll = random.randint(1,20)
-    if attack_roll >= player_class:
+    if attack_roll >= player_class["Defense"]:
         print(f"The {monster_type["Type"]} rolled a(n) {attack_roll}. It hit.")
         print("Rolling for damage...")
         time.sleep(1)
@@ -112,21 +112,22 @@ while True:
     print("Here are your stats!")
     print(f"Speed: {player_class["Speed"]}\nOffense: {player_class["Offense"]}\nDefense: {player_class["Defense"]}\nHealth: {player_class["Health"]}")
     monster_randomizer = random.randint(1,3)
-    match monster_randomizer:
-        case 1:
-            monster_type = wolf_stats
-            monster_health = wolf_stats["Health"]
-            break
-        case 2:
-            monster_type = goblin_stats
-            monster_health = goblin_stats["Health"]
-            break
-        case 3:
-            monster_type = job_stats
-            monster_health = job_stats["Health"]
-            break
-        case _:
-            print("unexpected error")
+    while True:
+        match monster_randomizer:
+            case 1:
+                monster_type = wolf_stats
+                monster_health = wolf_stats["Health"]
+                break
+            case 2:
+                monster_type = goblin_stats
+                monster_health = goblin_stats["Health"]
+                break
+            case 3:
+                monster_type = job_stats
+                monster_health = job_stats["Health"]
+                break
+            case _:
+                print("unexpected error")
     print(f"You have encountered a {monster_type["Type"]}!")
     if monster_type["Speed"] > player_class["Speed"]:
         turn = 2
@@ -162,12 +163,12 @@ while True:
                 print("3. Use healing potion (10 health, 3 uses max)")
                 print("4. Flee (may or may not work)") 
                 player_action = input("Which would you like to do? 1/2/3/4").strip()
-                if player_action == 1 or player_action == 2:
+                if player_action == "1" or player_action == "2":
                     monster_health -= player_attack(monster_type,player_class,player_action)
                     print(f"The {monster_type["Type"]} now has {monster_health} health left.")
                     print(f"Player Health: {player_health}")
                     turn = 2
-                if player_action == 3:
+                if player_action == "3":
                     while True:
                         if player_health == player_class["Health"]:
                             print("You are at max health and cannot heal.")
@@ -177,7 +178,7 @@ while True:
                             print(f"New health: {player_health}")
                             turn = 2
                             break
-                elif player_action == 4:
+                elif player_action == "4":
                     print("Rolling 1D20 against monster speed...")
                     time.sleep(1)
                     escape_attempt = random.randint(1,20)
@@ -191,9 +192,12 @@ while True:
             if turn == 2:
                 print("Monster's turn")
                 monster_attack(player_class,monster_type)
+                print(f"Player Health: {player_health}")
+                turn = 1
 
     go_again = input("Would you like to play again? Yes/No").strip().capitalize()
     if go_again == "Yes":
         continue
     else:
         print("Goodbye!")
+        break
