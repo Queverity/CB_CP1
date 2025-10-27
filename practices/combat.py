@@ -19,7 +19,7 @@ monster_type = ""
 def player_attack(monster_type,player_class):
     print("Rolling 1D20...")
     time.sleep(1)
-    attack_roll = random.randint(1,20)
+    attack_roll = random.randint(1,20) + 4
     if attack_roll >= monster_type["Defense"]:
         print(f"You rolled a(n) {attack_roll}. You hit!")
         print("Rolling for damage...")
@@ -27,7 +27,7 @@ def player_attack(monster_type,player_class):
         player_damage = (player_class["Offense"]/3) + random.randint(1,6)
         print(f"You dealt {player_damage} damage.")
         return player_damage
-    elif attack_roll == 20:
+    elif attack_roll - 4 == 20:
         print("You rolled a natural 20. Critical hit! You will deal double damage.")
         print("Rolling for damage...")
         time.sleep(1)
@@ -138,7 +138,10 @@ while True:
                         print("2. Wild strike (deal double damage but take damage as well)") 
                         break
                     elif player_class["Class"] == "Rouge":
-                        print("2. Risky slash (eouble damage, take damage as well)")
+                        print("2. Risky slash (double damage, take damage as well)")
+                        break
+                    elif player_class["Class"] == "God":
+                        print("2. Intercontinental Ballistic Missile (Double damage, take damage as well)")
                         break
                     else:
                         print("2. Fireball (double damage, take damage as well)")

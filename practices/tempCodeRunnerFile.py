@@ -1,2 +1,1 @@
-
-            groceri
+t_one.right(90)
