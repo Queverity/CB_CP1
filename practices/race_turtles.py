@@ -37,8 +37,8 @@ game = True
 
 # initalizing game window
 wn = turtle.Screen()
-turtle.title() = ("Turtle Racing")
-turtle.bgcolor() = ("red")
+wn.title("Turtle Racing")
+wn.bgcolor("pink")
 
 # function to check for win
 def win_condition():
