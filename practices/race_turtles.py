@@ -56,23 +56,23 @@ def win_condition():
 
     # checks if the x-cord of a turtle overlaps the finish line
     # if it does, the game loop will stop running (the turtles stop moving), and print "(Color) Wins!" onto the window
-    if green.xcor() > 165:
+    if green.xcor() > 166:
         game = False
         writing.write("Green Wins!",font=("Arial", 50, "bold"))
     
-    elif red.xcor() > 165:
+    elif red.xcor() > 166:
         game = False
         writing.write("Red Wins!",font=("Arial", 50, "bold"))
     
-    elif purple.xcor() > 165:
+    elif purple.xcor() > 166:
         game = False
         writing.write("Purple Wins!",font=("Arial", 50, "bold"))
     
-    elif orange.xcor() > 165:
+    elif orange.xcor() > 166:
         game = False
         writing.write("Orange Wins!",font=("Arial", 50, "bold"))
     
-    elif blue.xcor() > 165:
+    elif blue.xcor() > 166:
         game = False
         writing.write("Blue Wins!",font=("Arial", 50, "bold"))
 
