@@ -56,23 +56,23 @@ def win_condition():
 
     # checks if the x-cord of a turtle overlaps the finish line
     # if it does, the game loop will stop running (the turtles stop moving), and print "(Color) Wins!" onto the window
-    if green.xcor() > 184:
+    if green.xcor() > 165:
         game = False
         writing.write("Green Wins!",font=("Arial", 50, "bold"))
     
-    elif red.xcor() > 184:
+    elif red.xcor() > 165:
         game = False
         writing.write("Red Wins!",font=("Arial", 50, "bold"))
     
-    elif purple.xcor() > 184:
+    elif purple.xcor() > 165:
         game = False
         writing.write("Purple Wins!",font=("Arial", 50, "bold"))
     
-    elif orange.xcor() > 184:
+    elif orange.xcor() > 165:
         game = False
         writing.write("Orange Wins!",font=("Arial", 50, "bold"))
     
-    elif blue.xcor() > 184:
+    elif blue.xcor() > 165:
         game = False
         writing.write("Blue Wins!",font=("Arial", 50, "bold"))
 
@@ -158,6 +158,7 @@ def intialize():
     green.goto(-500,500)
     green.pendown()
     green.pencolor("green")
+    green.shapesize(stretch_wid=2, stretch_len=2, outline=1)
 
     red = turtle.Turtle()
     red.color("red")
@@ -166,6 +167,7 @@ def intialize():
     red.goto(-500,250)
     red.pendown()
     red.pencolor("red")
+    red.shapesize(stretch_wid=2, stretch_len=2, outline=1)
 
     purple = turtle.Turtle()
     purple.color("purple")
@@ -174,6 +176,7 @@ def intialize():
     purple.goto(-500,0)
     purple.pendown()
     purple.pencolor("purple")
+    purple.shapesize(stretch_wid=2, stretch_len=2, outline=1)
 
     orange = turtle.Turtle()
     orange.color("orange")
@@ -182,6 +185,7 @@ def intialize():
     orange.goto(-500,-250)
     orange.pendown()
     orange.pencolor("orange")
+    orange.shapesize(stretch_wid=2, stretch_len=2, outline=1)
 
     blue = turtle.Turtle()
     blue.color("blue")
@@ -190,6 +194,7 @@ def intialize():
     blue.goto(-500,-500)
     blue.pendown()
     blue.pencolor("blue")
+    blue.shapesize(stretch_wid=2, stretch_len=2, outline=1)
 
     # update the screen
     wn.update()
