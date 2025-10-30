@@ -4,13 +4,6 @@
 import random
 import turtle
 
-# setting variable names before setting their value
-global green
-global red
-global purple
-global orange
-global blue
-
 # creating a turtle to make text on the screen
 writing = turtle.Turtle()
 
@@ -30,9 +23,9 @@ writing.pendown()
 writing.pencolor("black")
 writing.pensize(2)
 
-# variable for running the game loop
-global game
 game = True
+
+
 
 
 # initalizing game window
@@ -41,16 +34,8 @@ wn.title("Turtle Racing")
 wn.bgcolor("pink")
 
 # function to check for win
-def win_condition():
-
-    # calling variables
-    global green
-    global red
-    global purple
-    global orange
-    global blue
-    global game
-
+def win_condition(green,red,purple,orange,blue,game):
+    
     # this makes it so the window does not update until told so
     wn.tracer(0)
 
@@ -59,22 +44,27 @@ def win_condition():
     if green.xcor() > 166:
         game = False
         writing.write("Green Wins!",font=("Arial", 50, "bold"))
+        return 0
     
     elif red.xcor() > 166:
         game = False
         writing.write("Red Wins!",font=("Arial", 50, "bold"))
+        return 0
     
     elif purple.xcor() > 166:
         game = False
         writing.write("Purple Wins!",font=("Arial", 50, "bold"))
+        return 0
     
     elif orange.xcor() > 166:
         game = False
         writing.write("Orange Wins!",font=("Arial", 50, "bold"))
+        return 0
     
     elif blue.xcor() > 166:
         game = False
         writing.write("Blue Wins!",font=("Arial", 50, "bold"))
+        return 0
 
     # update the screen with the writing
     wn.update()
@@ -82,18 +72,9 @@ def win_condition():
     # make it so the screen updates automatically again
     wn.tracer(1)
 
+
 # function to move the turtles forward
-def turtle_movement():
-
-    # call variables
-    global green
-    global red
-    global purple
-    global orange
-    global blue
-    global game
-
-
+def turtle_movement(green,red,purple,orange,blue,game):
     # moves all turtles forward a random amount of steps between 1 and 10, then calls win condtition to see if any of them have crossed the finish line
     while game == True:
         green.forward(random.randint(1,10))
@@ -106,21 +87,16 @@ def turtle_movement():
 
         blue.forward(random.randint(1,10))
         
-        win_condition()
+        win = win_condition(green,red,purple,orange,blue,game)
+        if win == 0:
+            break
+        
     
 
 def intialize():
 
     # makes it so the screen doesn't update until told to
     wn.tracer(0)
-
-    # call variables
-    global green
-    global red
-    global purple
-    global orange
-    global blue
-
 
     # make turtle to draw line
     line_drawer = turtle.Turtle()
@@ -201,6 +177,10 @@ def intialize():
 
     # make it so the screen updates automatically again
     wn.tracer(1)
+    
+    
+    
+    turtle_movement(green,red,purple,orange,blue,game)
 
     
 
@@ -208,7 +188,7 @@ def intialize():
 intialize()
 
 # start the turtle movement loop
-turtle_movement()
+
 
 # make it so the window won't close until X button is clicked
 turtle.done()
