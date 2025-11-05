@@ -6,6 +6,15 @@ import random as ran
 row_grid = [[],[],[],[],[],[]]
 col_grid = [[],[],[],[],[],[]]
 
+maze_drawer = t.Turtle()
+maze_drawer.hideturtle()
+maze_drawer.color("black")
+maze_drawer.speed(5)
+drawer_y_value = 300
+drawer_x_value = -300
+maze_drawer.penup()
+maze_drawer.goto(drawer_x_value,drawer_y_value)
+
 wn = t.Screen()
 wn.bgcolor("lightblue")
 wn.title("Maze Generator")
@@ -45,7 +54,7 @@ def solvable(row_grid, col_grid):
 def draw_walls(wn):
     wn.tracer(0)
     wall_drawer = t.Turtle()
-    wall_drawer.color("yellow")
+    wall_drawer.color("black")
     wall_drawer.speed(10)
     wall_drawer.hideturtle()
     wall_drawer.penup()
@@ -66,75 +75,68 @@ def draw_walls(wn):
     wn.update()
     wn.tracer(1)
 
-def generate_maze(row_grid,col_grid):
-    while True:
-        wn.tracer(0)
-        maze_drawer = t.Turtle()
-        maze_drawer.hideturtle()
-        maze_drawer.color("yellow")
-        maze_drawer.speed(10)
-        drawer_y_value = 300
-        drawer_x_value = -300
+def generate_maze(row_grid,col_grid,maze_drawer,drawer_y_value,drawer_x_value):
+   
+    
+    for i in range(0,6):
+        for _ in range(0,6):
+            random_gen = ran.randint(0,1)
+            row_grid[i].append(random_gen)
+    for i in range(0,6):
+        for _ in range(0,6):
+            random_gen = ran.randint(0,1)
+            col_grid[i].append(random_gen)
+        
+    for b in range(0,5):
         maze_drawer.penup()
-        maze_drawer.goto(drawer_x_value,drawer_y_value)
-        for i in range(0,6):
-            for i in range(0,6):
-                random_gen = ran.randint(0,1)
-                row_grid[i].append(random_gen)
+        drawer_y_value -= 100
+        maze_drawer.goto(-300,drawer_y_value)
 
-        for i in range(0,6):
-            for i in range(0,6):
-                random_gen = ran.randint(0,1)
-                col_grid[i].append(random_gen)
-            
-        for i in range(1,6):
-            maze_drawer.penup()
-            drawer_y_value -= 100
-            maze_drawer.goto(-300,drawer_y_value)
+        for a in row_grid[b]:
+            if a == 0:
+                maze_drawer.penup()
+                maze_drawer.forward(100)
+            elif a == 1:
+                maze_drawer.pendown()
+                maze_drawer.forward(100)
 
-            for a in row_grid[i]:
-                if a == 0:
-                    maze_drawer.penup()
-                    maze_drawer.forward(100)
-                elif a == 1:
-                    maze_drawer.pendown()
-                    maze_drawer.forward(100)
-
-        maze_drawer.right(90)
+    maze_drawer.right(90)
 
 
-        for i in range(1,6):
-            maze_drawer.penup()
-            drawer_x_value += 100
-            maze_drawer.goto(drawer_x_value,300)
-            
-            for a in col_grid[i]:
-                if a == 0:
-                    maze_drawer.penup()
-                    maze_drawer.forward(100)
-                elif a == 1:
-                    maze_drawer.pendown()
-                    maze_drawer.forward(100)
-
-        if solvable():
-            break
-        else:
-            continue
+    for c in range(0,5):
+        maze_drawer.penup()
+        drawer_x_value += 100
+        maze_drawer.goto(drawer_x_value,300)
+        
+        for a in col_grid[c]:
+            if a == 0:
+                maze_drawer.penup()
+                maze_drawer.forward(100)
+            elif a == 1:
+                maze_drawer.pendown()
+                maze_drawer.forward(100)
 
     
 
 
-        
 
-            
-
-
-
-
-   
-
-
-draw_walls()
-generate_maze(row_grid,col_grid)
+draw_walls(wn)
+while True:
+    generate_maze(row_grid,col_grid,maze_drawer,drawer_y_value,drawer_x_value)
+    solved = solvable(row_grid,col_grid)
+    if solved == True:
+        break
+    else:
+        maze_drawer.clear()
+        drawer_y_value = 300
+        drawer_x_value = -300
+        maze_drawer.penup()
+        maze_drawer.goto(drawer_x_value,drawer_y_value)
+        maze_drawer.left(90)
+        for i in range(0,6):
+            row_grid[i].clear()
+        for i in range(0,6):
+            col_grid[i].clear()
+        continue
 t.done()
 
