@@ -1,1 +1,2 @@
-_grid[y][x]
+
+            total += side_menu(item)
