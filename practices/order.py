@@ -128,7 +128,10 @@ for choice in user_order.values():
         print("Unexpected error")
 
 total = calculate_price(user_order,drink_menu,main_menu,side_menu)
-print(f"Final Price (tax included): ${total:.2f}")
+if total != 0:
+    print(f"Final Price (tax included): ${total:.2f}")
+else:
+    print("You came to a restaraunt and didn't buy anything. Why?")
 
 
 
