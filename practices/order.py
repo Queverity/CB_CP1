@@ -6,8 +6,6 @@ drink_menu = {
     "Pepsi": 1.00,
     "Root Beer": 1.00,
     "Sprite": 1.00,
-    "Chocolate Milkshake": 1.99,
-    "Vanilla Milkshake": 1.99,
 }
 
 main_menu = {
@@ -15,15 +13,11 @@ main_menu = {
     "Hamburger": 1.99,
     "Cheeseburger": 2.49,
     "Hotdog": 1.49,
-    "Chicken Sandwich": 1.49,
-    "Double Hamburger": 3.49,
 }
 
 side_menu = {
     # Sides and their prices
     "Fries": 1.00,
-    "Onion Rings": 1.49,
-    "Tater Tots": 1.00,
     "Chips": 1.00,
     "Salad": 1.49,
 
@@ -58,7 +52,9 @@ def print_menus(drink_menu,main_menu,side_menu):
 def calculate_price(user_order,drink_menu,main_menu,side_menu):
     total = 0
     for item in user_order.values():
-        if item in drink_menu:
+        if item == "Nothing":
+            pass
+        elif item in drink_menu:
             total += drink_menu[item]
 
         elif item in main_menu:
@@ -82,34 +78,35 @@ print_menus(drink_menu,main_menu,side_menu)
 for item in user_order:
     while item == "Drink":
         choice = input(f"What would you like for your {item}? Enter 'None' to skip this selection.").capitalize().strip()
-        if choice not in drink_menu:
+        if choice == "None":
+            user_order[item] = "Nothing"
+            break
+        elif choice not in drink_menu:
             print("Invalid answer")
             continue
-        elif choice == "None":
-            user_order[item] = ""
-            break
         else:
             user_order[item] = choice
             break
     while item == "Main course":
         choice = input(f"What would you like for your {item}? Enter 'None' to skip this selection.").capitalize().strip()
-        if choice not in main_menu:
+        if choice == "None":
+            user_order[item] = "Nothing"
+            break
+        elif choice not in main_menu:
             print("Invalid answer")
             continue
-        elif choice == "None":
-            user_order[item] = ""
-            break
+       
         else:
             user_order[item] = choice
             break
     while item == "First side dish" or item == "Second side dish":
         choice = input(f"What would you like for your {item}? Enter 'None' to skip this selection.").capitalize().strip()
-        if choice not in side_menu:
+        if choice == "None":
+            user_order[item] = "Nothing"
+            break
+        elif choice not in side_menu:
             print("Invalid answer")
             continue
-        elif choice == "None":
-            user_order[item] = ""
-            break
         else:
             user_order[item] = choice
             break
@@ -125,6 +122,8 @@ for choice in user_order.values():
     elif choice in side_menu:
         print(f"{choice}: ${side_menu[choice]:.2f}")
     
+    elif choice == "Nothing":
+        print(f"Nothing")
     else:
         print("Unexpected error")
 
