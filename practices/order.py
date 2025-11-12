@@ -126,12 +126,15 @@ for choice in user_order.values():
         print(f"Nothing")
     else:
         print("Unexpected error")
+while True:
+    total = calculate_price(user_order,drink_menu,main_menu,side_menu)
+    if total != 0:
+        print(f"Final Price (tax included): ${total:.2f}")
+        break
+    else:
+        print("You came to a restaraunt and didn't buy anything. Why?")
+        break
 
-total = calculate_price(user_order,drink_menu,main_menu,side_menu)
-if total != 0:
-    print(f"Final Price (tax included): ${total:.2f}")
-else:
-    print("You came to a restaraunt and didn't buy anything. Why?")
 
 
 

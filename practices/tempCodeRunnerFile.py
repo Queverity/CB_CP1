@@ -1,2 +1,1 @@
-
-            total += side_menu(item)
+print("You came to a restaraunt and didn't buy anything. Why?")
