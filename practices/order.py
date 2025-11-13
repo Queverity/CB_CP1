@@ -15,6 +15,7 @@ main_menu = {
     "Hamburger": 1.99,
     "Cheeseburger": 2.49,
     "Hotdog": 1.49,
+    "Quesadilla":3.00,
 }
 
 # Menu for sides
@@ -23,6 +24,7 @@ side_menu = {
     "Fries": 1.00,
     "Chips": 1.00,
     "Salad": 1.49,
+    "Nachoes":2.00,
 
 }
 
