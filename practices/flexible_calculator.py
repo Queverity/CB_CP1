@@ -4,7 +4,7 @@ import statistics as stat
 number = True
 numbers = []
 
-def calculate(*numbers,function):
+def calculate(numbers,function):
     total = 0
     if function == "sum":
         for i in numbers:
@@ -24,9 +24,29 @@ def calculate(*numbers,function):
     
     return total
 
-print("Welcome to Flexible Calculator!")
+print("Welcome to the Flexible Calculator!")
 
 while True:
 
     while number == True:
-        pass
+        append = input("Enter a number, or enter 'done' to exit." ).strip().lower()
+        if append == "Done":
+            break
+        elif append is int or append is float
+        else:
+            print("invalid answer")
+            continue
+
+    function = input("What function do you want to perform? sum/average/max/min/product").strip().capitalize()
+    print(f"Result: {calculate(numbers,function)}")
+
+    again = input("Would you like to perform another calculation? yes/no").strip().lower()
+    if again == "yes":
+        print("Cleared number list")
+        numbers.clear()
+        continue
+    else:
+        print("Goodbye!")
+        break
+
+
