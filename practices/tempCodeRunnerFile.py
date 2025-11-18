@@ -1,1 +1,4 @@
-print("You came to a restaraunt and didn't buy anything. Why?")
+for i in append_num:
+                if i.isalpha() == True or i == " ":
+                    print("invalid answer")
+                    break

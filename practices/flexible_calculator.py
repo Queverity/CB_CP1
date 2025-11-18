@@ -1,26 +1,37 @@
 # CB 1st Flexible Calculator 
 import statistics as stat
 
-number = True
 numbers = []
+functions = ["sum","average","max","min","product"]
 
-def calculate(numbers,function):
+def calculate(numbers):
     total = 0
-    if function == "sum":
-        for i in numbers:
-            total += i
-    elif function == "average":
-        total = stat.mean(numbers)
-    elif function == "max":
-        total = max(numbers)
-    elif function == "min":
-        total = min(numbers)
-    elif function == "product":
-        for i in numbers:
-            if numbers.index(i) == 0:
-                total += i
-            else:
-                total * i
+    while True:
+        function = input("What function do you want to perform? sum/average/max/min/product").strip().lower()
+        if function not in functions:
+            print("invalid answer")
+            continue
+        else:
+            if function == "sum":
+                for i in numbers:
+                    total += i
+                break
+            elif function == "average":
+                total = stat.mean(numbers)
+                break
+            elif function == "max":
+                total = max(numbers)
+                break
+            elif function == "min":
+                total = min(numbers)
+                break
+            elif function == "product":
+                for i in numbers:
+                    if numbers.index(i) == 0:
+                        total += i
+                    else:
+                        total = total * i
+                break
     
     return total
 
@@ -28,17 +39,22 @@ print("Welcome to the Flexible Calculator!")
 
 while True:
 
-    while number == True:
-        append_num = input("Enter a number, or enter 'done' to exit." )
-        if append_num == "done":
+    while True:
+        append_num = input("Enter a number, or enter 'done' to move onto calculations." )
+        if append_num.strip().lower() == "done":
             break
-        
         else:
-            print("invalid answer")
-            continue
+            if append_num.isnumeric():
+                append_num = float(append_num)
+                numbers.append(append_num)
+                print(numbers)
+            else:
+                print("invalid answer")
 
-    function = input("What function do you want to perform? sum/average/max/min/product").strip().capitalize()
-    print(f"Result: {calculate(numbers,function)}")
+            
+   
+    total = calculate(numbers)
+    print(f"Result: {total}")
 
     again = input("Would you like to perform another calculation? yes/no").strip().lower()
     if again == "yes":
