@@ -29,10 +29,10 @@ print("Welcome to the Flexible Calculator!")
 while True:
 
     while number == True:
-        append = input("Enter a number, or enter 'done' to exit." ).strip().lower()
-        if append == "Done":
+        append_num = input("Enter a number, or enter 'done' to exit." )
+        if append_num == "done":
             break
-        elif append is int or append is float
+        
         else:
             print("invalid answer")
             continue
