@@ -86,7 +86,7 @@ while True:
         print("Cleared number list")
         numbers.clear()
         continue
-    # if anything else is said, say "goodbye" then break the main loop 
+    # if anything else is said, say "goodbye" then break the main loop
     else:
         print("Goodbye!")
         break
