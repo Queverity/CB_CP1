@@ -6,7 +6,7 @@ print("List Exponenentiater")
 while True:
     while True:
             # ask for number
-            append_num = input("Enter a number, or enter 'done' to move onto exponentiation." )
+            append_num = input("Enter a number, or enter 'done' to move onto exponentiation.")
             # if input is "done", break the loop
             if append_num.strip().lower() == "done":
                 break
