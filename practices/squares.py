@@ -15,8 +15,12 @@ while True:
                 # check if input is a number
                 if append_num.isnumeric():
                     # if it is a number, convert it to a float and then append it to numbers list
-                    append_num = int(append_num)
-                    numbers.append(append_num)
+                    if int(append_num) in numbers:
+                        print("Number is already in list")
+                        continue
+                    else: 
+                        append_num = int(append_num)
+                        numbers.append(append_num)
                 else:
                     # if it is not a number, print "invalid answer"
                     print("invalid answer")
@@ -36,7 +40,7 @@ while True:
     exponentiated_numbers = list(map(lambda num:num ** power, numbers))
     # go through exponentiated_numbers list and print original numbers then raised numbers
     for i, x in enumerate(exponentiated_numbers):
-        print(f"Orignal: {numbers[i]} Exponentiated: {exponentiated_numbers[i]}")
+        print(f"Orignal: {numbers[i]} | Raised to the power of {power}: {exponentiated_numbers[i]}")
 
     # ask if user would like to exponentiate more numbers
     again = input("Would you like to exponentiate another list of numbers? yes/no").strip().lower()
