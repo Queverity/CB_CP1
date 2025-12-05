@@ -1,11 +1,14 @@
 # CB 1st Text Adventure Final
 import random
+import time
 
 puzzle_one_status = False
 puzzle_two_status = False
 puzzle_three_status = False
 puzzle_four_status = False
 puzzle_five_status = False
+
+gnome_defeated = False
 
 user_room = 1
 
@@ -20,21 +23,24 @@ gnome_stats = {
 "Health":100,
 "Attack":8,
 "Defense":8,
-"Speed":12
+"Speed":12,
+"Type":"Gnome",
 }
 
 intezar_stats = {
 "Health":150,
 "Attack":12,
 "Defense":10,
-"Speed":12
+"Speed":12,
+"Type":"Fish",
 }
+
 
 inventory = {
 
 }
 
-def game_over(puzzle_one_status,puzzle_two_status,puzzle_three_status,puzzle_four_status,puzzle_five_status,player_stats,gnome_stats,intezar_stats,inventory,user_room):
+def game_over(puzzle_one_status,puzzle_two_status,puzzle_three_status,puzzle_four_status,puzzle_five_status,player_stats,gnome_stats,intezar_stats,inventory,user_room,gnome_defeated):
         play_again = input("You died! Would you like to play again? Yes/No").strip().capitalize()
         if play_again == "No":
                 print("Goodbye!")
@@ -45,6 +51,8 @@ def game_over(puzzle_one_status,puzzle_two_status,puzzle_three_status,puzzle_fou
                 puzzle_three_status = False
                 puzzle_four_status = False
                 puzzle_five_status = False
+
+                gnome_defeated = False
 
                 user_room = 1
 
@@ -147,6 +155,139 @@ def puzzle_five(player_stats):
                         player_stats["Speed"] += 3
                         return True
                 
-puzzle_five(player_stats)
-print_stats(player_stats)
+def player_attack(player_stats,monster_stats):
+    print("Rolling 1D20...")
+    time.sleep(1)
+    attack_roll = random.randint(1,20) + 4
+    if attack_roll >= monster_stats["Defense"]:
+        print(f"You rolled a(n) {attack_roll}. You hit!")
+        print("Rolling for damage...")
+        time.sleep(1)
+        player_damage = (player_stats["Attack"]/3) + random.randint(1,6)
+        print(f"You dealt {player_damage} damage.")
+        return round(player_damage,1)
+    elif attack_roll - 4 == 20:
+        print("You rolled a natural 20. Critical hit! You will deal double damage.")
+        print("Rolling for damage...")
+        time.sleep(1)
+        player_damage = (player_stats["Attack"]/3) + random.randint(1,6)
+        player_damage = player_damage * 2
+        print(f"You dealt {player_damage} damage.")
+        return round(player_damage,1)
+    else:
+        print("You missed.")
+        return 0
+    
+def monster_attack(player_stats,monster_stats):
+    print("Rolling 1D20...")
+    time.sleep(1)
+    attack_roll = random.randint(1,20) + 4
+    if attack_roll >= player_stats["Defense"]:
+        print(f"The {monster_stats["Type"]} rolled a(n) {attack_roll}. It hit.")
+        print("Rolling for damage...")
+        time.sleep(1)
+        monster_damage = (monster_stats["Attack"]/3) + random.randint(1,6)
+        print(f"The {monster_stats["Type"]} dealt {monster_damage} damage.")
+        return round(monster_damage,1)
+    elif attack_roll >= 20:
+        print(f"The {monster_stats["Type"]} rolled a natural 20. Critical hit! it will deal double damage.")
+        print("Rolling for damage...")
+        time.sleep(1)
+        monster_damage = (monster_stats["Attack"]/3) + random.randint(1,6)
+        monster_damage = monster_damage * 2
+        print(f"The {monster_stats["Type"]} dealt {monster_damage} damage.")
+        return round(monster_damage,1)
+    else:
+        print(f"The {monster_stats["Type"]} missed.")
+        return 0
+    
+def win_condition(player_stats,monster_stats):
+    if player_stats["Health"] <= 0:
+        print("You have been defeated.")
+        return 1
+    elif monster_stats["Health"] <= 0:
+        print("You have defeated your foe!")
+        return 2
+    else:
+        return 0
+    
+def gnome_combat(player_stats,gnome_stats):
+        turn = 1
+        heals = 3
+        if player_stats["Speed"] > gnome_stats["Speed"]:
+                turn = 1
+        elif player_stats["Speed"] < gnome_stats["Speed"]:
+                turn = 0
+        else:
+                turn = random.randint(0,1)
+        while True:
+                if gnome_defeated == True:
+                       return 1
+                else:
+                        if turn == 0:
+                                print("Gnome's Turn")
+                                dialouge = random.randint(1,3)
+                                if dialouge == 1:
+                                       print("Gnome: 'rahhhh down with Wewart!")
+                                elif dialouge == 2:
+                                       print("Gnome: 'Intezar above all!'")
+                                else:
+                                       print("Gnome: 'Intezar is the fish man that took over this Triple-Decker Walmart'")
+                                damage = monster_attack(player_stats,monster_stats=gnome_stats)
+                                player_stats["Health"] -= damage
+                                print(f"You have {player_stats["Health"]} hit points left.")
+                                turn = 1
+                        elif turn == 1:
+                                while True:
+                                        print("Player's Turn")
+                                        print(f"1. Basic Attack\n2. Crazed Attack (x2 damage, you take some damage as well)\n3. Heal ({heals} left)\n4. Flee")
+                                        action = input("Enter number for action:\n").strip()
+                                        match action:
+                                                case "1":
+                                                        damage = player_attack(player_stats,monster_stats=gnome_stats)
+                                                        gnome_stats["Health"] -= damage
+                                                        print(f"The gnome has {gnome_stats["Health"]} left.")
+                                                        win = win_condition(player_stats,monster_stats=gnome_stats)
+                                                        if win == 1:
+                                                                return 0
+                                                        elif win == 2:
+                                                                gnome_defeated == True
+                                                                break
+                                                        else:
+                                                                turn = 0
+                                                                break
+                                                case "2":
+                                                        damage = player_attack(player_stats,monster_stats=gnome_stats) * 2
+                                                        gnome_stats["Health"] -= damage
+                                                        self_damage = round(damage/3,1)
+                                                        player_stats["Health"] -= self_damage
+                                                        print(f"The gnome has {gnome_stats["Health"]} left.")
+                                                        print(f"You took {self_damage} damage. You have {player_stats["Health"]} hit points left.")
+                                                        win = win_condition(player_stats,monster_stats=gnome_stats)
+                                                        if win == 1:
+                                                                game_over(puzzle_one_status,puzzle_two_status,puzzle_three_status,puzzle_four_status,puzzle_five_status,player_stats,gnome_stats,intezar_stats,inventory,user_room,gnome_defeated)
+                                                        elif win == 2:
+                                                                gnome_defeated == True
+                                                        else:
+                                                                turn = 0
+                                                                break
+                                                case "3":
+                                                        if heals == 0:
+                                                                print("You are out of heals.")
+                                                                continue
+                                                        else:
+                                                                player_stats["Health"] += 12
+                                                                print(f"You healed 12 damage. You now have {player_stats["Health"]} hit points left.")
+                                                                turn = 0
+                                                                break
+                                                case "4":
+                                                        print("Attempting to flee...")
+                                                        time.sleep(1)
+                                                        print("You failed.")
+                                                        turn = 0
+                                                        break
+gnome_combat(player_stats,gnome_stats)
+
+                        
+
 
