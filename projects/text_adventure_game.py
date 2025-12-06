@@ -12,6 +12,8 @@ gnome_defeated = False
 
 user_room = 1
 
+player_max_health = 100
+
 player_stats = {
 "Health":100,
 "Attack":10,
@@ -105,7 +107,7 @@ def puzzle_one(inventory):
                         inventory["Floor One Key"] = "A key to a door on the first floor."
                         return True
 
-def puzzle_two(player_stats):
+def puzzle_two(player_stats,player_max_health):
         print("You head over to the box. On it, you see two small plaques, and a set of wheels with numbers on them. One of the plaques reads '2x + 4 = 5x - 5', and the other reads 'solve for x and enter it into the box'.")
         while True:
                 choice = input("Enter your answer:\n").strip().capitalize()
@@ -116,6 +118,7 @@ def puzzle_two(player_stats):
                         print(f"You set the wheels to {choice}, and the box clicks open. In it, you find a very tasting looking apple. You eaNt it, and feel yourself become healthier.")
                         print("Health Pool + 25")
                         player_stats["Health"] += 25
+                        player_max_health += 25
                         return True
                 
 def puzzle_three(inventory):
@@ -164,14 +167,16 @@ def player_attack(player_stats,monster_stats):
         print("Rolling for damage...")
         time.sleep(1)
         player_damage = (player_stats["Attack"]/3) + random.randint(1,6)
+        player_damage = round(player_damage,1)
         print(f"You dealt {player_damage} damage.")
-        return round(player_damage,1)
+        return round(player_damage,0)
     elif attack_roll - 4 == 20:
         print("You rolled a natural 20. Critical hit! You will deal double damage.")
         print("Rolling for damage...")
         time.sleep(1)
         player_damage = (player_stats["Attack"]/3) + random.randint(1,6)
         player_damage = player_damage * 2
+        player_damage = round(player_damage,0)
         print(f"You dealt {player_damage} damage.")
         return round(player_damage,1)
     else:
@@ -187,6 +192,7 @@ def monster_attack(player_stats,monster_stats):
         print("Rolling for damage...")
         time.sleep(1)
         monster_damage = (monster_stats["Attack"]/3) + random.randint(1,6)
+        monster_damage = round(monster_damage,0)
         print(f"The {monster_stats["Type"]} dealt {monster_damage} damage.")
         return round(monster_damage,1)
     elif attack_roll >= 20:
@@ -195,8 +201,9 @@ def monster_attack(player_stats,monster_stats):
         time.sleep(1)
         monster_damage = (monster_stats["Attack"]/3) + random.randint(1,6)
         monster_damage = monster_damage * 2
+        monster_damage = round(monster_damage,0)
         print(f"The {monster_stats["Type"]} dealt {monster_damage} damage.")
-        return round(monster_damage,1)
+        return monster_damage
     else:
         print(f"The {monster_stats["Type"]} missed.")
         return 0
@@ -246,7 +253,7 @@ def gnome_combat(player_stats,gnome_stats):
                                                 case "1":
                                                         damage = player_attack(player_stats,monster_stats=gnome_stats)
                                                         gnome_stats["Health"] -= damage
-                                                        print(f"The gnome has {gnome_stats["Health"]} left.")
+                                                        print(f"The gnome has {gnome_stats["Health"]} hit points left.")
                                                         win = win_condition(player_stats,monster_stats=gnome_stats)
                                                         if win == 1:
                                                                 return 0
@@ -261,7 +268,7 @@ def gnome_combat(player_stats,gnome_stats):
                                                         gnome_stats["Health"] -= damage
                                                         self_damage = round(damage/3,1)
                                                         player_stats["Health"] -= self_damage
-                                                        print(f"The gnome has {gnome_stats["Health"]} left.")
+                                                        print(f"The gnome has {gnome_stats["Health"]} hit points left.")
                                                         print(f"You took {self_damage} damage. You have {player_stats["Health"]} hit points left.")
                                                         win = win_condition(player_stats,monster_stats=gnome_stats)
                                                         if win == 1:
@@ -272,11 +279,13 @@ def gnome_combat(player_stats,gnome_stats):
                                                                 turn = 0
                                                                 break
                                                 case "3":
-                                                        if heals == 0:
-                                                                print("You are out of heals.")
+                                                        if heals == 0 or player_stats["Health"] == player_max_health:
+                                                                print("You cannot health right now.")
                                                                 continue
                                                         else:
                                                                 player_stats["Health"] += 12
+                                                                while player_stats["Health"] > player_max_health:
+                                                                        player_stats["Health"] -= 1
                                                                 print(f"You healed 12 damage. You now have {player_stats["Health"]} hit points left.")
                                                                 turn = 0
                                                                 break
