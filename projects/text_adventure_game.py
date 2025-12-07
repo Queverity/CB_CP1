@@ -42,7 +42,7 @@ inventory = {
 
 }
 
-def game_over(puzzle_one_status,puzzle_two_status,puzzle_three_status,puzzle_four_status,puzzle_five_status,player_stats,gnome_stats,intezar_stats,inventory,user_room,gnome_defeated,intezar_dfeated):
+def game_over(puzzle_one_status,puzzle_two_status,puzzle_three_status,puzzle_four_status,puzzle_five_status,player_stats,gnome_stats,intezar_stats,inventory,user_room,gnome_defeated,intezar_defeated):
         play_again = input("You died! Would you like to play again? Yes/No").strip().capitalize()
         if play_again == "No":
                 print("Goodbye!")
@@ -87,9 +87,12 @@ def game_over(puzzle_one_status,puzzle_two_status,puzzle_three_status,puzzle_fou
                 return "Reset"
 
 def print_inventory(inventory):
-        print("Inventory:")
-        for key,value in inventory.items():
-                print(f"{key}: {value}")
+        if bool(inventory) == False:
+               print("Your inventory is empty.")
+        else:
+                print("Inventory:")
+                for key,value in inventory.items():
+                        print(f"{key}: {value}")
 
 def print_stats(player_stats):
         print("Stats:")
@@ -378,23 +381,69 @@ def intezar_combat(player_stats,intezar_stats):
 print("Some backstory:\n Intezar, the inverse mermaid leader of the Nouijelevad clan and ex-Dave Legion member, has invaded and taken over Walmartville, home of Wewart and the Dave Legion. He has taken up residence in the Triple-Decker Walmart, and you are the only applicable fighter that could take him down. It is your job to infiltrate the Walmart, get to the top floor, and defeat Intezar.")
 
 def room_one(player_stats,inventory):
-       input("You find yourself in what appears to be the lobby of the Triple-Decker Walmart. Around you, you can see scattered and shattered furniture lying on the floor, giving the impression that some sort of attack force barged into here with disregard for property damage. The only other items of interest you can see are doors to your left and right.")
+       print("You find yourself in what appears to be the lobby of the Triple-Decker Walmart. Around you, you can see scattered and shattered furniture lying on the floor, giving the impression that some sort of attack force barged into here with disregard for property damage. The only other items of interest you can see are doors to your left and right. What would you like to do?")
        while True:
-                choice = input("Enter number for action:\n1. Check Stats\n2. Check Inventory\n3. Go Right\n4. Go Left")
+                choice = input("Enter number for action:\n1. Check Stats\n2. Check Inventory\n3. Go Right\n4. Go Left\n")
+                match choice:
+                        case "1":
+                                print_stats(player_stats)
+                        case "2":
+                                print_inventory(inventory)
+                        case "3":
+                                return 2
+                        case "4":
+                                return 3
+                        case _:
+                                print("Invalid answer. Please try again.")
+                                continue
+                       
+def room_two(player_stats,inventory):
+       if "Shield" not in inventory:
+                print("You find yourself in what appears to have been an electronics array, though the electronics, along with plenty of glass, are arrayed on the floor now. You can see a door to your left, a door leading back to the room you just exited and, for some unknown reason, a shield just lying on the ground.")
+       else:
+                print("You find yourself in what appears to have been an electronics array, though the electronics, along with plenty of glass, are arrayed on the floor now. You can see a door to your left and the door leading back to the room you just exited.")       
+       while True:
+                if "Shield" not in inventory:
+                        choice = input("Enter number for action:\n1. Check Stats\n2. Check Inventory\n3. Go Left\n4. Go Back\n5. Pick Up Shield\n")
                         match choice:
-                                case 1:
+                                case "1":
                                         print_stats(player_stats)
-                                case 2:
+                                case "2":
                                         print_inventory(inventory)
-                                case 3:
-                                        return 2
-                                case 4:
-                                        return 3
+                                case "3":
+                                        if "Floor One Key" in inventory:
+                                                return 4
+                                        else:
+                                                print("The door is locked. Perhaps there is a key elsewhere on the floor?")
+                                                continue
+                                case "4":
+                                        return 1
+                                case "5":
+                                        print("You pick up the shield, and release it will work perfectly for you. You store it in your inventory. P.S: You can inspect your inventory later to look at this.")
+                                        print("Defense + 2")
+                                        player_stats["Defense"] += 2
+                                        inventory["Shield"] = "A shield you found on the floor that grants +2 defense."
                                 case _:
                                         print("Invalid answer. Please try again.")
                                         continue
+                else:
+                       choice = input("Enter number for action:\n1. Check Stats\n2. Check Inventory\n3. Go Left\n4. Go Back\n")
+                       match choice:
+                                case "1":
+                                        print_stats(player_stats)
+                                case "2":
+                                        print_inventory(inventory)
+                                case "3":
+                                        return 2
+                                case "4":
+                                        return 1
+                                case _:
+                                        print("Invalid answer. Please try again.")
+                                        continue
+                               
+room_two(player_stats,inventory)
 
-room_one(player_stats,inventory)
+
         
 
                         
