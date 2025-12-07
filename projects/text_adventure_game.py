@@ -42,7 +42,7 @@ inventory = {
 
 }
 
-def game_over(puzzle_one_status,puzzle_two_status,puzzle_three_status,puzzle_four_status,puzzle_five_status,player_stats,gnome_stats,intezar_stats,inventory,user_room,gnome_defeated):
+def game_over(puzzle_one_status,puzzle_two_status,puzzle_three_status,puzzle_four_status,puzzle_five_status,player_stats,gnome_stats,intezar_stats,inventory,user_room,gnome_defeated,intezar_dfeated):
         play_again = input("You died! Would you like to play again? Yes/No").strip().capitalize()
         if play_again == "No":
                 print("Goodbye!")
@@ -55,6 +55,7 @@ def game_over(puzzle_one_status,puzzle_two_status,puzzle_three_status,puzzle_fou
                 puzzle_five_status = False
 
                 gnome_defeated = False
+                intezar_defeated = False
 
                 user_room = 1
 
@@ -272,7 +273,7 @@ def gnome_combat(player_stats,gnome_stats):
                                                         print(f"You took {self_damage} damage. You have {player_stats["Health"]} hit points left.")
                                                         win = win_condition(player_stats,monster_stats=gnome_stats)
                                                         if win == 1:
-                                                                game_over(puzzle_one_status,puzzle_two_status,puzzle_three_status,puzzle_four_status,puzzle_five_status,player_stats,gnome_stats,intezar_stats,inventory,user_room,gnome_defeated)
+                                                                game_over(puzzle_one_status,puzzle_two_status,puzzle_three_status,puzzle_four_status,puzzle_five_status,player_stats,gnome_stats,intezar_stats,inventory,user_room,gnome_defeated,intezar_defeated)
                                                         elif win == 2:
                                                                 gnome_defeated == True
                                                         else:
@@ -295,7 +296,106 @@ def gnome_combat(player_stats,gnome_stats):
                                                         print("You failed.")
                                                         turn = 0
                                                         break
-gnome_combat(player_stats,gnome_stats)
+
+def intezar_combat(player_stats,intezar_stats):
+        turn = 1
+        heals = 3
+        if player_stats["Speed"] > intezar_stats["Speed"]:
+                turn = 1
+        elif player_stats["Speed"] < intezar_stats["Speed"]:
+                turn = 0
+        else:
+                turn = random.randint(0,1)
+        while True:
+                if intezar_defeated == True:
+                       return 1
+                else:
+                        if turn == 0:
+                                print("Intezar's Turn")
+                                dialouge = random.randint(1,3)
+                                if dialouge == 1:
+                                       print("Intezar: 'Wewart and the Dave Legion will fall to me.")
+                                elif dialouge == 2:
+                                       print("Intezar: 'Even attempting to stop me is foolish, mortal.'")
+                                else:
+                                       print("Intezar: 'Walmartville shall be mine!'")
+                                damage = monster_attack(player_stats,monster_stats=intezar_stats)
+                                player_stats["Health"] -= damage
+                                print(f"You have {player_stats["Health"]} hit points left.")
+                                turn = 1
+                        elif turn == 1:
+                                while True:
+                                        print("Player's Turn")
+                                        print(f"1. Basic Attack\n2. Crazed Attack (x2 damage, you take some damage as well)\n3. Heal ({heals} left)\n4. Flee")
+                                        action = input("Enter number for action:\n").strip()
+                                        match action:
+                                                case "1":
+                                                        damage = player_attack(player_stats,monster_stats=intezar_stats)
+                                                        intezar_stats["Health"] -= damage
+                                                        print(f"The fish has {intezar_stats["Health"]} hit points left.")
+                                                        win = win_condition(player_stats,monster_stats=intezar_stats)
+                                                        if win == 1:
+                                                                return 0
+                                                        elif win == 2:
+                                                                intezar_defeated == True
+                                                                break
+                                                        else:
+                                                                turn = 0
+                                                                break
+                                                case "2":
+                                                        damage = player_attack(player_stats,monster_stats=intezar_stats) * 2
+                                                        intezar_stats["Health"] -= damage
+                                                        self_damage = round(damage/3,1)
+                                                        player_stats["Health"] -= self_damage
+                                                        print(f"The gnome has {intezar_stats["Health"]} hit points left.")
+                                                        print(f"You took {self_damage} damage. You have {player_stats["Health"]} hit points left.")
+                                                        win = win_condition(player_stats,monster_stats=intezar_stats)
+                                                        if win == 1:
+                                                                game_over(puzzle_one_status,puzzle_two_status,puzzle_three_status,puzzle_four_status,puzzle_five_status,player_stats,intezar_stats,intezar_stats,inventory,user_room,gnome_defeated,intezar_defeated)
+                                                        elif win == 2:
+                                                                intezar_defeated == True
+                                                        else:
+                                                                turn = 0
+                                                                break
+                                                case "3":
+                                                        if heals == 0 or player_stats["Health"] == player_max_health:
+                                                                print("You cannot health right now.")
+                                                                continue
+                                                        else:
+                                                                player_stats["Health"] += 12
+                                                                while player_stats["Health"] > player_max_health:
+                                                                        player_stats["Health"] -= 1
+                                                                print(f"You healed 12 damage. You now have {player_stats["Health"]} hit points left.")
+                                                                turn = 0
+                                                                break
+                                                case "4":
+                                                        print("Attempting to flee...")
+                                                        time.sleep(1)
+                                                        print("You failed.")
+                                                        turn = 0
+                                                        break
+
+print("Some backstory:\n Intezar, the inverse mermaid leader of the Nouijelevad clan and ex-Dave Legion member, has invaded and taken over Walmartville, home of Wewart and the Dave Legion. He has taken up residence in the Triple-Decker Walmart, and you are the only applicable fighter that could take him down. It is your job to infiltrate the Walmart, get to the top floor, and defeat Intezar.")
+
+def room_one(player_stats,inventory):
+       input("You find yourself in what appears to be the lobby of the Triple-Decker Walmart. Around you, you can see scattered and shattered furniture lying on the floor, giving the impression that some sort of attack force barged into here with disregard for property damage. The only other items of interest you can see are doors to your left and right.")
+       while True:
+                choice = input("Enter number for action:\n1. Check Stats\n2. Check Inventory\n3. Go Right\n4. Go Left")
+                        match choice:
+                                case 1:
+                                        print_stats(player_stats)
+                                case 2:
+                                        print_inventory(inventory)
+                                case 3:
+                                        return 2
+                                case 4:
+                                        return 3
+                                case _:
+                                        print("Invalid answer. Please try again.")
+                                        continue
+
+room_one(player_stats,inventory)
+        
 
                         
 
