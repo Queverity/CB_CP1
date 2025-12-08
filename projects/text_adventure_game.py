@@ -9,6 +9,7 @@ puzzle_four_status = False
 puzzle_five_status = False
 
 gnome_defeated = False
+intezar_defeated = False
 
 user_room = 1
 
@@ -380,6 +381,8 @@ def intezar_combat(player_stats,intezar_stats):
 
 print("Some backstory:\n Intezar, the inverse mermaid leader of the Nouijelevad clan and ex-Dave Legion member, has invaded and taken over Walmartville, home of Wewart and the Dave Legion. He has taken up residence in the Triple-Decker Walmart, and you are the only applicable fighter that could take him down. It is your job to infiltrate the Walmart, get to the top floor, and defeat Intezar.")
 
+print("")
+
 def room_one(player_stats,inventory):
        print("You find yourself in what appears to be the lobby of the Triple-Decker Walmart. Around you, you can see scattered and shattered furniture lying on the floor, giving the impression that some sort of attack force barged into here with disregard for property damage. The only other items of interest you can see are doors to your left and right. What would you like to do?")
        while True:
@@ -441,11 +444,98 @@ def room_two(player_stats,inventory):
                                         print("Invalid answer. Please try again.")
                                         continue
                                
-room_two(player_stats,inventory)
+def room_three(player_stats,inventory,puzzle_one_status,puzzle_two_status):
+        while True:
+                if puzzle_one_status == False and puzzle_two_status == False:
+                        print("You find yourself in a room that seems to be a furniture display that is in suprisingly good condition, relative to the other rooms in this place. It seems whoever barged into here took care not damaging this room. The items of interest you can see in this room are two puzzle boxes, one to your left and one to your right, and the door leading back to the lobby. What would you like to do?")
+                        while True:
+                                choice = input("Enter number for action:\n1. Check Stats\n2. Check Inventory\n3. Inspect the puzzle box to your left\n4. Inspect the puzzle box to your right\n5. Head back to the lobby\n")
+                                match choice:
+                                        case "1":
+                                                print_stats(player_stats)
+                                                continue
+                                        case "2":
+                                                print_inventory(inventory)
+                                        case "3":
+                                                puzzle_one_status = puzzle_one(inventory)
+                                                break
+                                        case "4":
+                                                puzzle_two_status = puzzle_two(player_stats,player_max_health)
+                                                break
+                                        case "5":
+                                                return 1
 
+                if puzzle_one_status == True and puzzle_two_status == True:
+                        print("You find yourself in a room that seems to be a furniture display that is in suprisingly good condition, relative to the other rooms in this place. It seems whoever barged into here took care not damaging this room. The only item of interest you can see in this room in the door leading back to the lobby. What would you like to do?")
+                        while True:
+                                choice = input("Enter number for action:\n1. Check Stats\n2. Check Inventory\n3. Head back to the lobby\n")
+                                match choice:
+                                        case "1":
+                                                print_stats(player_stats)
+                                                continue
+                                        case "2":
+                                                print_inventory(inventory)
+                                                continue
+                                        case "3":
+                                                return 1
 
-        
+                if puzzle_one_status == True and puzzle_two_status == False:
+                        print("You find yourself in a room that seems to be a furniture display that is in suprisingly good condition, relative to the other rooms in this place. It seems whoever barged into here took care not damaging this room. The items of interest you can see in this room are two puzzle boxes, one to your left that you've already solved and one to your right that has not been completed, and the door leading back to the lobby. What would you like to do?")
+                        while True:
+                                choice = input("Enter number for action:\n1. Check Stats\n2. Check Inventory\n3. Inspect the puzzle box to your right\n4. Head back to the lobby\n")
+                                match choice:
+                                        case "1":
+                                                print_stats(player_stats)
+                                                continue
+                                        case "2":
+                                                print_inventory(inventory)
+                                                continue
+                                        case "3":
+                                                puzzle_two_status = puzzle_two(player_stats,player_max_health)
+                                                
+                                                break
+                                        case "4":
+                                                return 1
 
-                        
+                if puzzle_one_status == False and puzzle_two_status == True:
+                        print("You find yourself in a room that seems to be a furniture display that is in suprisingly good condition, relative to the other rooms in this place. It seems whoever barged into here took care not damaging this room. The items of interest you can see in this room are two puzzle boxes, one to your left that you have not solved and one to your right that you have solved, and the door leading back to the lobby. What would you like to do?")
+                        while True:
+                                choice = input("Enter number for action:\n1. Check Stats\n2. Check Inventory\n3. Inspect the puzzle box to your left\n4. Head back to the lobby\n")
+                                match choice:
+                                        case "1":
+                                                print_stats(player_stats)
+                                                continue
+                                        case "2":
+                                                print_inventory(inventory)
+                                                continue
+                                        case "3":
+                                                puzzle_one_status = puzzle_one(inventory)
+                                                
+                                                break
+                                        case "4":
+                                                return 1
+                continue
+
+def room_four(player_stats,inventory,gnome_defeated):
+        if gnome_defeated:
+                print("You find yourself in a spacious, empty room, with a very sleepy gnome lying on the floor. The only items of interest you can see in the room is the door leading back to the room you just came from and an elevator. What would you like to do?")
+        else:
+                print("You find yourself in a specious, mostly empty room, with an... oh hey that's a rabid gnome sprinting at you.")
+                print("Combat START")
+                gnome_combat(player_stats,gnome_stats)
+        while True:            
+                choice = input("Enter number for action:\n1. Check Stats\n2. Check Inventory\n3. Go back\n4. Go to the elevator (P.S: You cannot head back to this floor after going up.)")
+                match choice:
+                        case "1":
+                                print_stats(player_stats)
+                                continue
+                        case "2":
+                                print_inventory(inventory)
+                        case "3":
+                                return 3
+                        case "4":
+                                return "Floor Two"
+
+                 
 
 
