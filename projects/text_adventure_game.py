@@ -215,10 +215,8 @@ def monster_attack(player_stats,monster_stats):
     
 def win_condition(player_stats,monster_stats):
     if player_stats["Health"] <= 0:
-        print("You have been defeated.")
         return 1
     elif monster_stats["Health"] <= 0:
-        print("You have defeated your foe!")
         return 2
     else:
         return 0
@@ -260,11 +258,12 @@ def gnome_combat(player_stats,gnome_stats):
                                                         gnome_stats["Health"] -= damage
                                                         print(f"The gnome has {gnome_stats["Health"]} hit points left.")
                                                         win = win_condition(player_stats,monster_stats=gnome_stats)
+                                                        win = win_condition(player_stats,monster_stats=intezar_stats)
                                                         if win == 1:
                                                                 return 0
                                                         elif win == 2:
-                                                                gnome_defeated == True
-                                                                break
+                                                                gnome_defeated = True
+                                                                return 1
                                                         else:
                                                                 turn = 0
                                                                 break
@@ -277,9 +276,10 @@ def gnome_combat(player_stats,gnome_stats):
                                                         print(f"You took {self_damage} damage. You have {player_stats["Health"]} hit points left.")
                                                         win = win_condition(player_stats,monster_stats=gnome_stats)
                                                         if win == 1:
-                                                                game_over(puzzle_one_status,puzzle_two_status,puzzle_three_status,puzzle_four_status,puzzle_five_status,player_stats,gnome_stats,intezar_stats,inventory,user_room,gnome_defeated,intezar_defeated)
+                                                                return 0
                                                         elif win == 2:
-                                                                gnome_defeated == True
+                                                                gnome_defeated = True
+                                                                return 1
                                                         else:
                                                                 turn = 0
                                                                 break
@@ -341,8 +341,7 @@ def intezar_combat(player_stats,intezar_stats):
                                                         if win == 1:
                                                                 return 0
                                                         elif win == 2:
-                                                                intezar_defeated == True
-                                                                break
+                                                                return 1
                                                         else:
                                                                 turn = 0
                                                                 break
@@ -355,9 +354,9 @@ def intezar_combat(player_stats,intezar_stats):
                                                         print(f"You took {self_damage} damage. You have {player_stats["Health"]} hit points left.")
                                                         win = win_condition(player_stats,monster_stats=intezar_stats)
                                                         if win == 1:
-                                                                game_over(puzzle_one_status,puzzle_two_status,puzzle_three_status,puzzle_four_status,puzzle_five_status,player_stats,intezar_stats,intezar_stats,inventory,user_room,gnome_defeated,intezar_defeated)
+                                                                return 0
                                                         elif win == 2:
-                                                                intezar_defeated == True
+                                                                return 1
                                                         else:
                                                                 turn = 0
                                                                 break
@@ -386,7 +385,7 @@ print("")
 def room_one(player_stats,inventory):
        print("You find yourself in what appears to be the lobby of the Triple-Decker Walmart. Around you, you can see scattered and shattered furniture lying on the floor, giving the impression that some sort of attack force barged into here with disregard for property damage. The only other items of interest you can see are doors to your left and right. What would you like to do?")
        while True:
-                choice = input("Enter number for action:\n1. Check Stats\n2. Check Inventory\n3. Go Right\n4. Go Left\n")
+                choice = input("Enter number for action:\n1. Check Stats\n2. Check Inventory\n3. Go Right\n4. Go Left\n").strip()
                 match choice:
                         case "1":
                                 print_stats(player_stats)
@@ -407,7 +406,7 @@ def room_two(player_stats,inventory):
                 print("You find yourself in what appears to have been an electronics array, though the electronics, along with plenty of glass, are arrayed on the floor now. You can see a door to your left and the door leading back to the room you just exited.")       
        while True:
                 if "Shield" not in inventory:
-                        choice = input("Enter number for action:\n1. Check Stats\n2. Check Inventory\n3. Go Left\n4. Go Back\n5. Pick Up Shield\n")
+                        choice = input("Enter number for action:\n1. Check Stats\n2. Check Inventory\n3. Go Left\n4. Go Back\n5. Pick Up Shield\n").strip()
                         match choice:
                                 case "1":
                                         print_stats(player_stats)
@@ -430,7 +429,7 @@ def room_two(player_stats,inventory):
                                         print("Invalid answer. Please try again.")
                                         continue
                 else:
-                       choice = input("Enter number for action:\n1. Check Stats\n2. Check Inventory\n3. Go Left\n4. Go Back\n")
+                       choice = input("Enter number for action:\n1. Check Stats\n2. Check Inventory\n3. Go Left\n4. Go Back\n").strip()
                        match choice:
                                 case "1":
                                         print_stats(player_stats)
@@ -449,7 +448,7 @@ def room_three(player_stats,inventory,puzzle_one_status,puzzle_two_status):
                 if puzzle_one_status == False and puzzle_two_status == False:
                         print("You find yourself in a room that seems to be a furniture display that is in suprisingly good condition, relative to the other rooms in this place. It seems whoever barged into here took care not damaging this room. The items of interest you can see in this room are two puzzle boxes, one to your left and one to your right, and the door leading back to the lobby. What would you like to do?")
                         while True:
-                                choice = input("Enter number for action:\n1. Check Stats\n2. Check Inventory\n3. Inspect the puzzle box to your left\n4. Inspect the puzzle box to your right\n5. Head back to the lobby\n")
+                                choice = input("Enter number for action:\n1. Check Stats\n2. Check Inventory\n3. Inspect the puzzle box to your left\n4. Inspect the puzzle box to your right\n5. Head back to the lobby\n").strip()
                                 match choice:
                                         case "1":
                                                 print_stats(player_stats)
@@ -468,7 +467,7 @@ def room_three(player_stats,inventory,puzzle_one_status,puzzle_two_status):
                 if puzzle_one_status == True and puzzle_two_status == True:
                         print("You find yourself in a room that seems to be a furniture display that is in suprisingly good condition, relative to the other rooms in this place. It seems whoever barged into here took care not damaging this room. The only item of interest you can see in this room in the door leading back to the lobby. What would you like to do?")
                         while True:
-                                choice = input("Enter number for action:\n1. Check Stats\n2. Check Inventory\n3. Head back to the lobby\n")
+                                choice = input("Enter number for action:\n1. Check Stats\n2. Check Inventory\n3. Head back to the lobby\n").strip()
                                 match choice:
                                         case "1":
                                                 print_stats(player_stats)
@@ -482,7 +481,7 @@ def room_three(player_stats,inventory,puzzle_one_status,puzzle_two_status):
                 if puzzle_one_status == True and puzzle_two_status == False:
                         print("You find yourself in a room that seems to be a furniture display that is in suprisingly good condition, relative to the other rooms in this place. It seems whoever barged into here took care not damaging this room. The items of interest you can see in this room are two puzzle boxes, one to your left that you've already solved and one to your right that has not been completed, and the door leading back to the lobby. What would you like to do?")
                         while True:
-                                choice = input("Enter number for action:\n1. Check Stats\n2. Check Inventory\n3. Inspect the puzzle box to your right\n4. Head back to the lobby\n")
+                                choice = input("Enter number for action:\n1. Check Stats\n2. Check Inventory\n3. Inspect the puzzle box to your right\n4. Head back to the lobby\n").strip()
                                 match choice:
                                         case "1":
                                                 print_stats(player_stats)
@@ -500,7 +499,7 @@ def room_three(player_stats,inventory,puzzle_one_status,puzzle_two_status):
                 if puzzle_one_status == False and puzzle_two_status == True:
                         print("You find yourself in a room that seems to be a furniture display that is in suprisingly good condition, relative to the other rooms in this place. It seems whoever barged into here took care not damaging this room. The items of interest you can see in this room are two puzzle boxes, one to your left that you have not solved and one to your right that you have solved, and the door leading back to the lobby. What would you like to do?")
                         while True:
-                                choice = input("Enter number for action:\n1. Check Stats\n2. Check Inventory\n3. Inspect the puzzle box to your left\n4. Head back to the lobby\n")
+                                choice = input("Enter number for action:\n1. Check Stats\n2. Check Inventory\n3. Inspect the puzzle box to your left\n4. Head back to the lobby\n").strip()
                                 match choice:
                                         case "1":
                                                 print_stats(player_stats)
@@ -524,7 +523,7 @@ def room_four(player_stats,inventory,gnome_defeated):
                 print("Combat START")
                 gnome_combat(player_stats,gnome_stats)
         while True:            
-                choice = input("Enter number for action:\n1. Check Stats\n2. Check Inventory\n3. Go back\n4. Go to the elevator (P.S: You cannot head back to this floor after going up.)")
+                choice = input("Enter number for action:\n1. Check Stats\n2. Check Inventory\n3. Go back\n4. Go to the elevator (P.S: You cannot head back to this floor after going up.)").strip()
                 match choice:
                         case "1":
                                 print_stats(player_stats)
@@ -536,6 +535,200 @@ def room_four(player_stats,inventory,gnome_defeated):
                         case "4":
                                 return "Floor Two"
 
-                 
+def room_five(player_stats,inventory):
+        print("After stepping out of the elevator (which proceeds to plummet back down to the first floor, it broke), you find yourself in what seems to be a fairly small grocery store. Whoever barged into the Walmart obviously did not take care in this room, as there are fruits and vegetables strewn across the floor. Besides this, the only items of interest you can see are doors to your left and right. What would you like to do?")
+        while True:
+               choice = input("Enter number for action:\n1. Check Stats\n2. Check Inventory\n3. Go Right\n4. Go Left\n").strip()
+               match choice:
+                        case "1":
+                                print_stats(player_stats)
+                        case "2":
+                                print_inventory(inventory)
+                        case "3":
+                                return 6
+                        case "4":
+                                return 7
+                        case _:
+                                print("Invalid answer. Please try again.")
+                                continue 
+                       
+def room_six(player_stats,inventory,puzzle_three_status):
+        while True:
+                if puzzle_three_status:
+                        print("You find yourself in a room made of basically entirely fluffy things. You can see blankets, pillows, plushies, and at least one mattress. The only item of interest that you can see is a door to your right, and the door leading back to the grocery area. What would you like to do?")
+                        while True:
+                                choice = input("Enter number for action:\n1. Check Stats\n2. Check Inventory\n3. Go Right\n4. Go Back").strip()
+                                match choice:
+                                        case "1":
+                                                print_stats(player_stats)
+                                                continue
+                                        case "2":
+                                                print_inventory(inventory)
+                                                continue
+                                        case "3":
+                                                return 8
+                                        case "4":
+                                                return 5
+                                        
+                else:
+                        print("You find yourself in a room made of basically entirely fluffy things. You can see blankets, pillows, plushies, and at least one mattress. The only items of interest that you can see is a door to your right, the door leading back to the grocery area, and a puzzle box. What would you like to do?")
+                        while True:
+                                choice = input("Enter number for action:\n1. Check Stats\n2. Check Inventory\n3. Inspect Puzzle Box\n4. Go Right\n5. Go Back").strip()
+                                match choice:
+                                        case "1":
+                                                print_stats(player_stats)
+                                                continue
+                                        case "2":
+                                                print_inventory(inventory)
+                                                continue
+                                        case "3":
+                                                puzzle_three_status = puzzle_three(inventory)
+                                                break
+                                        case "4":
+                                                return 8
+                                        case "5":
+                                                return 5
+                                        
+def room_seven(player_stats,inventory,puzzle_four_status):
+         while True:
+                if puzzle_four_status:
+                        print("You find yourself in a room full of pet supplies. For an unknown reason, this room is in good condition. The only items of interest that you can see is a door to your left and the door leading back to the grocery area. What would you like to do?")
+                        while True:
+                                choice = input("Enter number for action:\n1. Check Stats\n2. Check Inventory\n3. Go Left\n4. Go Back").strip()
+                                match choice:
+                                        case "1":
+                                                print_stats(player_stats)
+                                                continue
+                                        case "2":
+                                                print_inventory(inventory)
+                                                continue
+                                        case "3":
+                                                return 8
+                                        case "4":
+                                                return 5
+                                        
+                else:
+                        print("You find yourself in a room full of pet supplies. For an unknown reason, this room is in good condition. The only items of interest that you can see is a door to your left, the door leading back to the grocery area, and a puzzle box. What would you like to do?")
+                        while True:
+                                choice = input("Enter number for action:\n1. Check Stats\n2. Check Inventory\n3. Inspect Puzzle Box\n4. Go Left\n5. Go Back").strip()
+                                match choice:
+                                        case "1":
+                                                print_stats(player_stats)
+                                                continue
+                                        case "2":
+                                                print_inventory(inventory)
+                                                continue
+                                        case "3":
+                                                puzzle_four_status = puzzle_four(inventory)
+                                                break
+                                        case "4":
+                                                return 8
+                                        case "5":
+                                                return 5
 
+def room_eight(player_stats,inventory,puzzle_five_status):
+        while True:
+                if puzzle_five_status:
+                        print("You find yourself in a room full of flags of all different kinds. As the flags are posed very high up, they are basically unscathed. Besides this, you can see a door (to your left) leading back to the fluffy room, a door (to your right) leading back to the pet supplies room, and an elevator in the center of the room that has a metal fish carved out of the center of the door. What would you like to do?")
+                        while True:
+                                choice = input("Enter number for action:\n1. Check Stats\n2. Check Inventory\n3. Go Left\n4. Go Right\n5. Inspect Elevator").strip()
+                                match choice:
+                                        case "1":
+                                                print_stats(player_stats)
+                                                continue
+                                        case "2":
+                                                print_inventory(inventory)
+                                                continue
+                                        case "3":
+                                                return 6
+                                        case "4":
+                                                return 7
+                                        case "5":
+                                                if "Top Half Fish" in inventory and "Bottom Half Fish" in inventory:
+                                                        print("You take out the two halfs of a metal fish you got from the puzzle boxes and put them in the fish shaped slot in the elevator door. Once you put them in, it clicks, hisses, then opens. Would you like to step into the elevator? You will not be able to head back down after. Yes/No")
+                                                        while True:
+                                                                choice = input("Yes/No").strip().capitalize()
+                                                                if choice == "Yes":
+                                                                        print("You walk into the elevator, the doors close, and it starts going up.")
+                                                                        return 9
+                                                                elif choice == "No":
+                                                                        print("You back away from the elevator")
+                                                                        break
+                                                                else:
+                                                                        print("Invalid answer")
+                                                                        continue
+                if not puzzle_five_status:
+                        print("You find yourself in a room full of flags of all different kinds. As the flags are posed very high up, they are basically unscathed. Besides this, you can see a door (to your left) leading back to the fluffy room, a door (to your right) leading back to the pet supplies room, an elevator in the center of the room that has a metal fish carved out of the center of the door, and another odd puzzle box. What would you like to do?")
+                        while True:
+                                choice = input("Enter number for action:\n1. Check Stats\n2. Check Inventory\n3. Go Left\n4. Go Right\n5. Inspect Elevator\n6. Inspect Puzzle Box").strip()
+                                match choice:
+                                        case "1":
+                                                print_stats(player_stats)
+                                                continue
+                                        case "2":
+                                                print_inventory(inventory)
+                                                continue
+                                        case "3":
+                                                return 6
+                                        case "4":
+                                                return 7
+                                        case "5":
+                                                if "Top Half Fish" in inventory and "Bottom Half Fish" in inventory:
+                                                        print("You take out the two halfs of a metal fish you got from the puzzle boxes and put them in the fish shaped slot in the elevator door. Once you put them in, it clicks, hisses, then opens. Would you like to step into the elevator? You will not be able to head back down after. Yes/No")
+                                                        while True:
+                                                                choice = input("Yes/No").strip().capitalize()
+                                                                if choice == "Yes":
+                                                                        return 9
+                                                                elif choice == "No":
+                                                                        print("You back away from the elevator")
+                                                                        break
+                                                                else:
+                                                                        print("Invalid answer")
+                                                                        continue
+                                        case "6":
+                                                puzzle_five_status = puzzle_five(player_stats)
+                                                break
+                        
+def room_nine(player_stats,intezar_stats):
+        print("The elevator dings, and the doors open up. You walk out, and find yourself in some sort of penthouse. Looking around, you see a very fancy wooden desk in the center of the room, and sitting behind it, Intezarr. He's some sort of... inverse mermaid, with human legs connec to a fish head. How that works, no one knows, not even Intezarr.")
+        print("Intezarr: 'I'm impressed by your tenacity in getting up here. Will it be enough to defeat me, though? I doubt it.'")
+        print("Combat START")
 
+        winner = intezar_combat(player_stats,intezar_stats)
+
+        if winner == 1:
+                return "Loss"
+        if winner == 2:
+                return "Win"
+
+def master_function(user_room):
+        user_room = 1
+        while True:
+                match user_room:
+                        case 1:
+                                user_room = room_one(player_stats,inventory)
+                                continue
+                        case 2:
+                                user_room = room_one(player_stats,inventory)
+                                continue
+                        case 3:
+                                user_room = room_one(player_stats,inventory)
+                                continue
+                        case 4:
+                                user_room = room_one(player_stats,inventory)
+                                continue
+                        case 5:
+                                user_room = room_one(player_stats,inventory)
+                                continue
+                        case 6:
+                                user_room = room_one(player_stats,inventory)
+                                continue
+                        case 7:
+                                user_room = room_one(player_stats,inventory)
+                                continue
+                        case 8:
+                                user_room = room_one(player_stats,inventory)
+                                continue
+                        case 9:
+                                user_room = room_one(player_stats,inventory)
+                                continue
