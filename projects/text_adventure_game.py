@@ -44,7 +44,7 @@ inventory = {
 }
 
 def game_over(puzzle_one_status,puzzle_two_status,puzzle_three_status,puzzle_four_status,puzzle_five_status,player_stats,gnome_stats,intezar_stats,inventory,user_room,gnome_defeated,intezar_defeated):
-        play_again = input("You died! Would you like to play again? Yes/No").strip().capitalize()
+        play_again = input("Would you like to play again? Yes/No").strip().capitalize()
         if play_again == "No":
                 print("Goodbye!")
                 return "Exit"
@@ -258,12 +258,11 @@ def gnome_combat(player_stats,gnome_stats):
                                                         gnome_stats["Health"] -= damage
                                                         print(f"The gnome has {gnome_stats["Health"]} hit points left.")
                                                         win = win_condition(player_stats,monster_stats=gnome_stats)
-                                                        win = win_condition(player_stats,monster_stats=intezar_stats)
                                                         if win == 1:
-                                                                return 0
+                                                                return "Loss"
                                                         elif win == 2:
                                                                 gnome_defeated = True
-                                                                return 1
+                                                                return "Win"
                                                         else:
                                                                 turn = 0
                                                                 break
@@ -276,10 +275,10 @@ def gnome_combat(player_stats,gnome_stats):
                                                         print(f"You took {self_damage} damage. You have {player_stats["Health"]} hit points left.")
                                                         win = win_condition(player_stats,monster_stats=gnome_stats)
                                                         if win == 1:
-                                                                return 0
+                                                                return "Loss"
                                                         elif win == 2:
                                                                 gnome_defeated = True
-                                                                return 1
+                                                                return "Win"
                                                         else:
                                                                 turn = 0
                                                                 break
@@ -414,6 +413,7 @@ def room_two(player_stats,inventory):
                                         print_inventory(inventory)
                                 case "3":
                                         if "Floor One Key" in inventory:
+                                                print("You take the key you found earlier and insert it into the lock on the door. It clicks, and the door swings open.")
                                                 return 4
                                         else:
                                                 print("The door is locked. Perhaps there is a key elsewhere on the floor?")
@@ -436,7 +436,12 @@ def room_two(player_stats,inventory):
                                 case "2":
                                         print_inventory(inventory)
                                 case "3":
-                                        return 2
+                                      if "Floor One Key" in inventory:
+                                                print("You take the key you found earlier and insert it into the lock on the door. It clicks, and the door swings open.")
+                                                return 4
+                                      else:
+                                                print("The door is locked. Perhaps there is a key elsewhere on the floor?")
+                                                continue  
                                 case "4":
                                         return 1
                                 case _:
@@ -521,7 +526,9 @@ def room_four(player_stats,inventory,gnome_defeated):
         else:
                 print("You find yourself in a specious, mostly empty room, with an... oh hey that's a rabid gnome sprinting at you.")
                 print("Combat START")
-                gnome_combat(player_stats,gnome_stats)
+                winner = gnome_combat(player_stats,gnome_stats)
+                if winner == "Loss":
+                        return "Loss"
         while True:            
                 choice = input("Enter number for action:\n1. Check Stats\n2. Check Inventory\n3. Go back\n4. Go to the elevator (P.S: You cannot head back to this floor after going up.)").strip()
                 match choice:
@@ -709,26 +716,34 @@ def master_function(user_room):
                                 user_room = room_one(player_stats,inventory)
                                 continue
                         case 2:
-                                user_room = room_one(player_stats,inventory)
+                                user_room = room_two(player_stats,inventory)
                                 continue
                         case 3:
-                                user_room = room_one(player_stats,inventory)
+                                user_room = room_three(player_stats,inventory,puzzle_one_status,puzzle_two_status)
                                 continue
                         case 4:
-                                user_room = room_one(player_stats,inventory)
+                                user_room = room_four(player_stats,inventory,gnome_defeated)
                                 continue
                         case 5:
-                                user_room = room_one(player_stats,inventory)
+                                user_room = room_five(player_stats,inventory)
                                 continue
                         case 6:
-                                user_room = room_one(player_stats,inventory)
+                                user_room = room_six(player_stats,inventory,puzzle_three_status)
                                 continue
                         case 7:
-                                user_room = room_one(player_stats,inventory)
+                                user_room = room_seven(player_stats,inventory,puzzle_four_status)
                                 continue
                         case 8:
-                                user_room = room_one(player_stats,inventory)
+                                user_room = room_eight(player_stats,inventory,puzzle_five_status)
                                 continue
                         case 9:
-                                user_room = room_one(player_stats,inventory)
+                                user_room = room_nine(player_stats,intezar_stats)
                                 continue
+                        case "Win":
+                                print("You've defeated Intezarr, and freed Walmartville from his reign. Wewart will regain his rightful control over the city. Yippeeeee!!!")
+                                game_over(puzzle_one_status,puzzle_two_status,puzzle_three_status,puzzle_four_status,puzzle_five_status,player_stats,gnome_stats,intezar_stats,inventory,user_room,gnome_defeated,intezar_defeated)
+                        case "Loss":
+                                print("It seems you've died. Like, git gud.")
+                                game_over(puzzle_one_status,puzzle_two_status,puzzle_three_status,puzzle_four_status,puzzle_five_status,player_stats,gnome_stats,intezar_stats,inventory,user_room,gnome_defeated,intezar_defeated)
+
+master_function(user_room)
