@@ -102,10 +102,14 @@ def print_stats(player_stats):
                 print(f"{key}: {value}")
         
 def puzzle_one(inventory,puzzle_one_status):
-        print("You head over to the box. On it, you see two small plaques, and a set of wheels with letters on them. One of the plaques reads 'UMMCMISNO', and the other reads 'unscramble these letters into a word and enter them into the box'.")
+        print("You head over to the box. On it, you see two small plaques, and a set of wheels with letters on them. One of the plaques reads 'UMMCMISNO', and the other reads 'unscramble these letters into a word and enter them into the box'. Type 'hint' to get a hint, type 'answer' for the answer if you really can't figure it out.")
         while True:
                 choice = input("Enter your answer:\n").strip().capitalize()
-                if choice != "Communism":
+                if choice == "Hint":
+                        print("Hint: Soviet Russia")
+                elif choice == "Answer":
+                        print("Answer: Communism")
+                elif choice != "Communism":
                         print(f"You set the wheels to {choice}, but the box does not open. Try again.")
                         continue
                 else:
@@ -130,10 +134,14 @@ def puzzle_two(player_stats,puzzle_two_status):
                         return True
                 
 def puzzle_three(inventory,puzzle_three_status):
-        print("You head over to the box. On it, you see two small plaques, and a set of wheels with letters on them. One of the plaques reads 'gfxpjygfqq', and the other reads 'decipher this word and enter it into the box'. Hint: Ceaser Cipher")
+        print("You head over to the box. On it, you see two small plaques, and a set of wheels with letters on them. One of the plaques reads 'gfxpjygfqq', and the other reads 'decipher this word and enter it into the box'. Hint: Ceaser Cipher. Type 'hint' to get a different hint, type 'answer' for the answer if you really can't figure it out.")
         while True:
                 choice = input("Enter your answer:\n").strip().capitalize()
-                if choice != "Basketball":
+                if choice == "Hint":
+                        print("Hint: The shift key is 5. Search it up on google or something.")
+                elif choice == "Answer":
+                        print("Answer: Basketball")
+                elif choice != "Basketball":
                         print(f"You set the wheels to {choice}, but the box does not open. Try again.")
                         continue
                 else:
@@ -269,7 +277,7 @@ def gnome_combat(player_stats,gnome_stats,gnome_defeated):
                                                         elif win == 2:
                                                                 gnome_defeated = True
                                                                 player_stats["Health"] = player_stats["Max Health"]
-                                                                return "Win"
+                                                                continue
                                                         else:
                                                                 turn = 0
                                                                 break
@@ -543,6 +551,8 @@ def room_four(player_stats,inventory,gnome_defeated):
                 winner = gnome_combat(player_stats,gnome_stats,gnome_defeated)
                 if winner == "Loss":
                         return "Loss"
+                else:
+                        pass
         while True:            
                 choice = input("Enter number for action:\n1. Check Stats\n2. Check Inventory\n3. Go back\n4. Go to the elevator (P.S: You cannot head back to this floor after going up.)").strip()
                 match choice:
@@ -726,6 +736,7 @@ def room_nine(player_stats,intezar_stats):
 def master_function(user_room):
         user_room = 1
         while True:
+                time.sleep(1)
                 match user_room:
                         case 1:
                                 user_room = room_one(player_stats,inventory)
