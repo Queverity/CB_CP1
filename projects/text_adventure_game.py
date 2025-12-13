@@ -2,10 +2,10 @@
 import random
 import time
 
-user_room = 9
+user_room = 1
 
 def master_function(user_room):
-        user_room = 9
+        user_room = 1
         puzzle_one_status = False
         puzzle_two_status = False
         puzzle_three_status = False
@@ -34,7 +34,7 @@ def master_function(user_room):
         }
 
         intezar_stats = {
-        "Health":1,
+        "Health":150,
         "Attack":12,
         "Defense":10,
         "Speed":12,
@@ -84,7 +84,7 @@ def master_function(user_room):
                                 print(f"You set the wheels to {choice}, but the box does not open. Try again.")
                                 continue
                         else:
-                                print(f"You set the wheels to {choice}, and the box clicks open. In it, you find a very tasting looking apple. You eaNt it, and feel yourself become healthier.")
+                                print(f"You set the wheels to {choice}, and the box clicks open. In it, you find a very tasty looking apple. You eat it, and feel yourself become healthier.")
                                 print("Health Pool + 25")
                                 player_stats["Health"] += 25
                                 player_stats["Max Health"] += 25
@@ -338,7 +338,7 @@ def master_function(user_room):
                                                                 damage = player_attack(player_stats,monster_stats=intezar_stats)
                                                                 intezar_stats["Health"] -= damage
                                                                 print(f"Intezarr has {intezar_stats["Health"]} hit points left.")
-                                                                win = win_condition(player_stats,monster_stats=gnome_stats)
+                                                                win = win_condition(player_stats,monster_stats=intezar_stats)
                                                                 if win == 1:
                                                                         print("You have been defeated by Intezarr!")
                                                                         return "Loss"
@@ -388,9 +388,9 @@ def master_function(user_room):
         print("")
 
         def room_one(player_stats,inventory):
-                print("You find yourself in what appears to be the lobby of the Triple-Decker Walmart. Around you, you can see scattered and shattered furniture lying on the floor, giving the impression that some sort of attack force barged into here with disregard for property damage. The only other items of interest you can see are doors to your left and right. What would you like to do?")
+                print("You find yourself in what appears to be the lobby of the Triple-Decker Walmart. Around you, you can see scattered and shattered furniture lying on the floor, giving the impression that some sort of attack force barged into here with disregard for property damage. The only other items of interest you can see are doors to your left and right.  What would you like to do?")
                 while True:
-                        choice = input("Enter number for action:\n1. Check Stats\n2. Check Inventory\n3. Go Right\n4. Go Left\n").strip()
+                        choice = input("Enter number for action:\n1. Check Stats\n2. Check Inventory\n3. Go Right\n4. Go Left\n5. Pet Cat\n").strip()
                         match choice:
                                 case "1":
                                         print_stats(player_stats)
@@ -630,9 +630,9 @@ def master_function(user_room):
                                                         return 5
                                                 
                         else:
-                                print("You find yourself in a room full of pet supplies. For an unknown reason, this room is in good condition. The only items of interest that you can see is a door to your left, the door leading back to the grocery area, and a puzzle box. What would you like to do?")
+                                print("You find yourself in a room full of pet supplies. For an unknown reason, this room is in good condition. The only items of interest that you can see is a door to your left, the door leading back to the grocery area, and a puzzle box. Also, a cat just... vibing, chilling on the floor. 'Tis a little baby. What would you like to do?")
                                 while True:
-                                        choice = input("Enter number for action:\n1. Check Stats\n2. Check Inventory\n3. Inspect Puzzle Box\n4. Go Left\n5. Go Back").strip()
+                                        choice = input("Enter number for action:\n1. Check Stats\n2. Check Inventory\n3. Inspect Puzzle Box\n4. Go Left\n5. Go Back\n6. Pet Cat").strip()
                                         match choice:
                                                 case "1":
                                                         print_stats(player_stats)
@@ -647,6 +647,9 @@ def master_function(user_room):
                                                         return 8
                                                 case "5":
                                                         return 5
+                                                case "6":
+                                                        print("You pet the cat. It purrs loudly, very content with its life.")
+                                                        continue
 
         def room_eight(player_stats,inventory,puzzle_five_status):
                 while True:
