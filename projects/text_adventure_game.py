@@ -87,8 +87,10 @@ def master_function(user_room):
                         else:
                                 print(f"You set the wheels to {choice}, and the box clicks open. In it, you find a very tasty looking apple. You eat it, and feel yourself become healthier.")
                                 print("Health Pool + 25")
+                                print("Attack + 1")
                                 player_stats["Health"] += 25
                                 player_stats["Max Health"] += 25
+                                player_stats["Attack"] += 1
                                 puzzle_two_status = True
                                 return True
                         
