@@ -1,7 +1,7 @@
 # CB 1st Text Adventure Final
 import random
 import time
-import sys
+
 
 user_room = 1
 
@@ -27,7 +27,7 @@ def master_function(user_room):
         }
 
         gnome_stats = {
-        "Health":100,
+        "Health":1-0,
         "Attack":8,
         "Defense":8,
         "Speed":12,
@@ -216,21 +216,21 @@ def master_function(user_room):
                                                 print("Gnome: 'Intezar above all!'")
                                         else:
                                                 print("Gnome: 'Intezar is the fish man that took over this Triple-Decker Walmart'")
-                                                damage = monster_attack(player_stats,monster_stats=gnome_stats)
-                                                player_stats["Health"] -= damage
-                                                print(f"You have {player_stats["Health"]} hit points left.")
-                                                win = win_condition(player_stats,monster_stats=gnome_stats)
-                                                if win == 1:
-                                                        print("You have been defeated by the gnome!")
-                                                        return "Loss"
-                                                elif win == 2:
-                                                        print("You have defeated the gnome!")
-                                                        gnome_defeated = True
-                                                        while player_stats["Health"] != player_stats["Max Health"]:
-                                                                player_stats["Health"] += 1
-                                                        continue
-                                                else:
-                                                        turn = 1
+
+                                        damage = monster_attack(player_stats,monster_stats=gnome_stats)
+                                        player_stats["Health"] -= damage
+                                        print(f"You have {player_stats["Health"]} hit points left.")
+                                        win = win_condition(player_stats,monster_stats=gnome_stats)
+                                        if win == 1:
+                                                print("You have been defeated by the gnome!")
+                                                return "Loss"
+                                        elif win == 2:
+                                                print("You have defeated the gnome!")
+                                                gnome_defeated = True
+                                                player_stats["Health"] = player_stats["Max Health"]
+                                                continue
+                                        else:
+                                                turn = 1
 
                                 elif turn == 1:
                                         while True:
@@ -250,7 +250,7 @@ def master_function(user_room):
                                                                         print("You have defeated the gnome!")
                                                                         gnome_defeated = True
                                                                         player_stats["Health"] = player_stats["Max Health"]
-                                                                        continue
+                                                                        break
                                                                 else:
                                                                         turn = 0
                                                                         break
@@ -263,12 +263,13 @@ def master_function(user_room):
                                                                 print(f"You took {self_damage} damage. You have {player_stats["Health"]} hit points left.")
                                                                 win = win_condition(player_stats,monster_stats=gnome_stats)
                                                                 if win == 1:
-                                                                        print("You have been defeated by the gnome!!")
+                                                                        print("You have been defeated by the gnome!")
                                                                         return "Loss"
                                                                 elif win == 2:
                                                                         print("You have defeated the gnome!")
                                                                         gnome_defeated = True
-                                                                        return "Win"
+                                                                        player_stats["Health"] = player_stats["Max Health"]
+                                                                        break
                                                                 else:
                                                                         turn = 0
                                                                         break
@@ -314,19 +315,20 @@ def master_function(user_room):
                                                 print("Intezar: 'Even attempting to stop me is foolish, mortal.'")
                                         else:
                                                 print("Intezar: 'Walmartville shall be mine!'")
-                                                damage = monster_attack(player_stats,monster_stats=intezar_stats)
-                                                player_stats["Health"] -= damage
-                                                print(f"You have {player_stats["Health"]} hit points left.")
-                                                win = win_condition(player_stats,monster_stats=intezar_stats)
-                                                if win == 1:
-                                                        print("You have been defeated by Intezarr!")
-                                                        return "Loss"
-                                                elif win == 2:
-                                                        print("You have defeated Intezarr!")
-                                                        return "Win"
-                                                else:
-                                                        turn = 1
-                                                        continue
+
+                                        damage = monster_attack(player_stats,monster_stats=intezar_stats)
+                                        player_stats["Health"] -= damage
+                                        print(f"You have {player_stats["Health"]} hit points left.")
+                                        win = win_condition(player_stats,monster_stats=intezar_stats)
+                                        if win == 1:
+                                                print("You have been defeated by Intezarr!")
+                                                return "Loss"
+                                        elif win == 2:
+                                                print("You have defeated Intezarr!")
+                                                return "Win"
+                                        else:
+                                                turn = 1
+                                                continue
                         
                                 elif turn == 1:
                                         while True:
@@ -348,7 +350,7 @@ def master_function(user_room):
                                                                         return "Win"
                                                                 else:
                                                                         turn = 0
-                                                                        continue
+                                                                        break
                                                         case "2":
                                                                 damage = player_attack(player_stats,monster_stats=intezar_stats) * 2
                                                                 intezar_stats["Health"] -= damage
@@ -365,7 +367,7 @@ def master_function(user_room):
                                                                         return "Win"
                                                                 else:
                                                                         turn = 0
-                                                                        continue
+                                                                        break
                                                         case "3":
                                                                 if heals == 0 or player_stats["Health"] == player_stats["Max Health"]:
                                                                         print("You cannot health right now.")
@@ -376,13 +378,13 @@ def master_function(user_room):
                                                                                 player_stats["Health"] -= 1
                                                                         print(f"You healed 12 damage. You now have {player_stats["Health"]} hit points left.")
                                                                         turn = 0
-                                                                        continue
+                                                                        break
                                                         case "4":
                                                                 print("Attempting to flee...")
                                                                 time.sleep(1)
                                                                 print("You failed.")
                                                                 turn = 0
-                                                                continue
+                                                                break
 
         print("Some backstory:\n Intezar, the inverse mermaid leader of the Noigelevad clan and ex-Dave Legion member, has invaded and taken over Walmartville, home of Wewart and the Dave Legion. He has taken up residence in the Triple-Decker Walmart, and you are the only applicable fighter that could take him down. It is your job to infiltrate the Walmart, get to the top floor, and defeat Intezar. Your only weapon, for some reason, is a really cool looking stick. Good luck!")
 
@@ -801,9 +803,10 @@ def master_function(user_room):
 
                                                 }
                                                 user_room = 1
-                                                continue
+                                                break
                                         elif play_again == "No":
                                                 print("Goodbye!")
+                                                return
                                         else:
                                                 print("invalid answer")
                                                 continue
@@ -856,9 +859,10 @@ def master_function(user_room):
 
                                                 }
                                                 user_room = 1
-                                                continue
+                                                break
                                         elif play_again == "No":
                                                 print("Goodbye!")
+                                                return
                                         else:
                                                 print("invalid answer")
                                                 continue
