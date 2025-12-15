@@ -21,9 +21,9 @@ def master_function(user_room):
         player_stats = {
         "Health":100,
         "Max Health":100,
-        "Attack":10,
-        "Defense":10,
-        "Speed":10
+        "Attack (Damage is calculated using this)":10,
+        "Defense (Higher stats here make it harder for the enemy to hit you)":10,
+        "Speed (This is used to decide who will go first in a combat situation)":10
         }
 
         gnome_stats = {
@@ -379,6 +379,7 @@ def master_function(user_room):
                                                                         while player_stats["Health"] > player_stats["Max Health"]:
                                                                                 player_stats["Health"] -= 1
                                                                         print(f"You healed 12 damage. You now have {player_stats["Health"]} hit points left.")
+                                                                        heals -= 1
                                                                         turn = 0
                                                                         break
                                                         case "4":
