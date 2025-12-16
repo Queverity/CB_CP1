@@ -21,13 +21,13 @@ def master_function(user_room):
         player_stats = {
         "Health":100,
         "Max Health":100,
-        "Attack (Damage is calculated using this)":10,
-        "Defense (Higher stats here make it harder for the enemy to hit you)":10,
-        "Speed (This is used to decide who will go first in a combat situation)":10
+        "Attack":10,
+        "Defense":10,
+        "Speed":10
         }
 
         gnome_stats = {
-        "Health":1-0,
+        "Health":100,
         "Attack":8,
         "Defense":8,
         "Speed":12,
